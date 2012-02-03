@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<page name="page">
+	<data>
+		<name><![CDATA[Home]]></name>
+	</data>
+	<component name="header" id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/en" active="active">Home</link>
+					<link href="/en/cms">Hoborg CMS</link>
+					<link href="/en/blog">Blog</link>
+					<link href="http://projects.hoborglabs.com/">Projects</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="2">
+		<component name="content" id="3" parent-id="2">
+			<data>
+				<type><![CDATA[primaryContent]]></type>
+			</data>
+
+			<component name="column" id="4" parent-id="3">
+				<data>
+					<size><![CDATA[columns3]]></size>
+				</data>
+				<component name="paragraph" id="5" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>Hoborg</strong> Laboratories, check it out.</h3>]]></text>
+					</data>
+				</component>
+				<component name="image" id="6" parent-id="4">
+					<data>
+						<src><![CDATA[/images/mr-hoborg.png]]></src>
+						<alt><![CDATA[Something scenic]]></alt>
+						<align><![CDATA[left]]></align>
+						<size><![CDATA[column1]]></size>
+					</data>
+				</component>
+				<component name="paragraph" id="7" parent-id="4">
+					<data>
+						<text><![CDATA[<p>Hoborg Labolatories is a home for all my projects. Obviousely it    s all about Hoborg which is the core project (Zend Controllers and library).</p>
+<p>You can find out more about Hoborg CMS on <a href="../../../en/cms">its site</a>. All projects in my lab are build and tested on Hudson continues integration server.</p>]]></text>
+					</data>
+				</component>
+				
+				<component name="paragraph" id="7" parent-id="4">
+					<data>
+						<text><![CDATA[
+<h3>Build your own <strong>Dashboard</strong></h3>
+<p>Hoborg Labolatories released <a href="http://dashboard.hoborglabs.com">Dashboard</a>. It's free, easy to install
+and run, distributed dashboard. It comes with handy widgets for pulling data from Jenkins, Trello, Redmine, Github... 
+HoborgLabs <a href="/dashboard">got one</a> as well.
+</p>
+<p>
+Do you have multiple servers in your infrastructure? Not a problem - just put a hoborglabs widget on your server
+and add it to your dashboard!
+</p>
+						]]></text>
+					</data>
+				</component>
+				<component name="image" id="6" parent-id="4">
+					<data>
+						<src><![CDATA[/images/dashboard-demo.png]]></src>
+						<alt><![CDATA[HoborgLabs Dashboard]]></alt>
+						<align><![CDATA[left]]></align>
+						<size><![CDATA[columns3]]></size>
+					</data>
+				</component>
+				
+				<component name="paragraph">
+					<data>
+						<text><![CDATA[
+<h3><strong>Bye-bye</strong> Zend.</h3>
+<p>Hoborg Labs is moving away form Zend. Next stop: Symfony2, Doctrine2 and Behat2. First module on the list is HoborgCommons - which is now public project and you can 
+<a href="https://github.com/hoborglabs">find it on github</a>!</p>
+<p>On top of that Hoborg will be getting RESTful APIs. More information and docs comming soon.</p>
+]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="8" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>What's</strong> new?</h3>
+<p><strong>Hoborg Dashboard</strong> - It's a status board for Hoborg CMS vital signs. You can check progress, project health, and many more in <a href="../../../en/dashboard">one place</a>.</p>
+<p>Something missing? Let us know and we will add new graphs or stats.</p>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+		<component name="content" id="9" parent-id="2">
+			<data>
+				<type><![CDATA[secondaryContent]]></type>
+			</data>
+
+			<component name="column" id="10" parent-id="9">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+
+				<component name="paragraph" id="11" parent-id="10">
+					<data>
+						<text><![CDATA[
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life's passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        ]]></text>
+					</data>
+				</component>
+			</component>
+			<component name="column" id="12" parent-id="9">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+				<component name="paragraph" id="13" parent-id="12">
+					<data>
+						<text><![CDATA[<h4>Hoborg CMS <strong>News</strong></h4>]]></text>
+					</data>
+				</component>
+				<component name="paragraph">
+					<data>
+						<text><![CDATA[<p><sub>02 February 2012</sub><br />Hoborg DisplayService phar will be available soon. Quick and easy way for displaying your website.</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph">
+					<data>
+						<text><![CDATA[<p><sub>30 September 2011</sub><br />Hoborg Commons is now <a href="https://github.com/hoborglabs">available on github</a>!</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="14" parent-id="12">
+					<data>
+						<text><![CDATA[<p><sub>18 May 2011</sub><br />Hoborg CMS 0.7 is almost ready. This version brings another bunch of stories for easier and richer page editing experience.</p>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+	</component>
+	<component file="includes/en/footer.page" id="15" />
+</page>

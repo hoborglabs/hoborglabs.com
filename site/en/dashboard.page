@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<page name="page">
+	<data>
+		<name><![CDATA[HoborgLabs Dashboarf]]></name>
+	</data>
+	<component name="header" id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/en">Home</link>
+					<link href="/en/cms">Hoborg CMS</link>
+					<link href="/en/dashboard" active="active">Dashboard</link>
+					<link href="http://projects.hoborglabs.com/">Projects</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="2">
+		<data>
+			<type>h-dashboard</type>
+		</data>
+
+		<component name="h-widget-redmine" id="4">
+			<data>
+				<size><![CDATA[h-widget-2-2]]></size>
+				<title>Hoborg CMS - Current Sprint progress</title>
+				<type>progressMeter</type>
+				<redmineUrl>/httpProxy.php?_proxyUrl=http%3A//projects.hoborglabs.com</redmineUrl>
+			</data>
+		</component>
+
+		<component name="h-widget-time" id="4">
+			<data>
+				<size><![CDATA[h-widget-1-1]]></size>
+			</data>
+		</component>
+
+		<component name="h-widget-jenkins" id="4">
+			<data>
+				<size><![CDATA[h-widget-2-1]]></size>
+				<jenkinsUrl>/httpProxy.php?_proxyUrl=http%3A//localhost%3A8080</jenkinsUrl>
+			</data>
+		</component>
+
+		<component name="h-widget-redmine" id="4">
+			<data>
+				<size><![CDATA[h-widget-2-1]]></size>
+				<title>Hoborg CMS - Current Sprint Stories</title>
+				<type>storiesList</type>
+				<redmineUrl>/httpProxy.php?_proxyUrl=http%3A//projects.hoborglabs.com</redmineUrl>
+			</data>
+		</component>
+
+		<component name="h-widget-time" id="4">
+			<data>
+				<size><![CDATA[h-widget-1-1]]></size>
+			</data>
+		</component>
+
+	</component>
+</page>

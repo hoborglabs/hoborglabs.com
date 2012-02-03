@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<page name="page">
+	<data>
+		<name><![CDATA[Home]]></name>
+	</data>
+	<component name="header" id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/pl" active="active">Home</link>
+					<link href="/pl/cms">Hoborg CMS</link>
+					<link href="/pl/dashboard">Tablica</link>
+					<link href="http://projects.hoborglabs.com/">Projekty</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="2">
+		<component name="content" id="3" parent-id="2">
+			<data>
+				<type><![CDATA[primaryContent]]></type>
+			</data>
+
+			<component name="column" id="4" parent-id="3">
+				<data>
+					<size><![CDATA[columns3]]></size>
+				</data>
+
+				<component name="paragraph" id="5" parent-id="4">
+					<data>
+						<text><![CDATA[<h3>Laboratoria <strong>Hoborg</strong>, co to takiego?</h3>]]></text>
+					</data>
+				</component>
+				<component name="image" id="6" parent-id="4">
+					<data>
+						<src><![CDATA[/images/mr-hoborg.png]]></src>
+						<alt><![CDATA[Pan Hoborg]]></alt>
+						<align><![CDATA[left]]></align>
+						<size><![CDATA[column1]]></size>
+					</data>
+				</component>
+				<component name="paragraph" id="7" parent-id="4">
+					<data>
+						<text><![CDATA[<p>Laboratoria Hoborg-a są domem dla moich projekt&oacute;w. Oczywiście wszystko kręci się dookoła Hoborg-a, kt&oacute;ry jest gł&oacute;wnym projektem (Zend + biblioteki).</p>
+<p>Możesz dowiedzieć się więcej o CMS Hoborg na <a href="../../../pl/cms">stronie projektu</a>. Wszystkie projekty są automatycznie budowane i testowane z pomocą Pana Jenkinsa - serwera ciągłej integracji.</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="8" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>Co</strong> nowego?</h3>
+<p><strong>Tablica Hoborg-a</strong> - to tablica witalnych wskaźnik&oacute;w Hoborg-a. Możesz na niej szybko sprawdzić postęp projektu, stan i wiele innych cech w <a href="../../../pl/dashboard">jednym miejscu</a>.</p>
+<p>Brakuje informacji kt&oacute;rej szukasz? Daj nam znać jakich informacji potrzebujesz, a my dodamy nowy wykres lub statystyki.</p>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+		<component name="content" id="9" parent-id="2">
+			<data>
+				<type><![CDATA[secondaryContent]]></type>
+			</data>
+
+			<component name="column" id="10" parent-id="9">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+
+				<component name="paragraph" id="11" parent-id="10">
+					<data>
+						<text><![CDATA[<h4>Coś o <strong>Mnie</strong></h4>
+<p>Wszystkie aspekty aplikacji webowych, z naciskiem na interaktywność i użyteczność, są jedna z moich największych pasji. Interesuje się aplikacjami zorientowanymi na usługi, bazami danych oraz systemami rozproszonymi.</p>]]></text>
+					</data>
+				</component>
+			</component>
+			<component name="column" id="12" parent-id="9">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+				<component name="paragraph" id="13" parent-id="12">
+					<data>
+						<text><![CDATA[<h4><strong>Aktualności</strong> - Hoborg CMS.</h4>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="14" parent-id="12">
+					<data>
+						<text><![CDATA[<p><sub>18 May 2011</sub><br />Hoborg CMS 0.7 już prawie gotowy. Ta wersjia wprowadzi kolejny zestaw usprawnień oraz wzbogaci użyteczność edytowania stron.</p>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+	</component>
+	<component file="includes/pl/footer.page" id="15" />
+</page>

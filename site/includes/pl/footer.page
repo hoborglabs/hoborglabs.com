@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page name="include">
+    <component name="footer" id="1">
+        <data>
+            <about><![CDATA[<h4>Co Jest<strong> w Środku</strong>?</h4>
+<p><img class="logo" title="Zend Framework" src="http://hoborglabs.com/images/footer-zend-framework.png" alt="Zend Framework" /> <img class="logo" title="SVN" src="http://hoborglabs.com/images/footer-svn.png" alt="SVN" /> <img class="logo" title="PHP" src="http://hoborglabs.com/images/footer-php.png" alt="PHP" /> <img class="logo" title="jQuery Core &amp; UI" src="http://hoborglabs.com/images/footer-jquery.png" alt="jQuery Core &amp; UI" /></p>
+<h4><strong>Skontaktuj</strong> Się z Nami</h4>
+<p>Napisz na adres: <strong>wojtek@hoborglabs.com</strong></p>]]></about>
+            <other><![CDATA[<h4><strong>Kto</strong> używa Hoborg CMS?</h4>
+<ul>
+<li>efa-academy.co.uk</li>
+<li>wojtek.oledzki.info</li>
+<li>hoborglabs.com</li>
+</ul>
+<p>Copyright &copy; 2010-2011 hoborglabs.com. Wszystkie prawa zastrzeżone.</p>]]></other>
+        </data>
+    </component>
+</page>

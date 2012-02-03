@@ -1,0 +1,142 @@
+/**
+ Global CSS for hoborglabs.com
+ */
+
+div.fullWidth {
+    width: 950px !important;
+}
+
+/* CSS clear */
+
+* {
+    margin: 0em;
+    padding: 0em;
+}
+br.clear {
+    clear: both;
+}
+
+/* CLEARFIX */
+.clearfix:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+ 
+.clearfix {
+    display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+    display: block;
+}
+ 
+* html .clearfix {
+    height: 1%;
+}
+
+/**
+ * HEADER
+ */
+#header {
+    width:100%;
+    height:122px;
+}
+#headerInner {
+    position: relative;
+    width: 950px;
+    height:122px;
+    margin: 0 auto;
+}
+
+/** Logo */
+#headerInner img.logo {
+    position: absolute;
+    bottom: 0px;
+}
+#logo {
+    position: absolute;
+    bottom: 0.6em;
+    left: 110px;
+}
+
+/* Menu */
+#menu {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+/**
+ * MAIN
+ */
+#main_inner {
+    position: relative;
+    margin: 0 auto;
+    padding-top: 2.5em;
+}
+
+/** Layout */
+div.column1 {
+    float: left;
+    width: 190px;
+}
+div.columns2 {
+    float: left;
+    width: 380px;
+}
+div.columns3 {
+    float: left;
+    width: 570px;
+}
+div.columns4 {
+    float: left;
+    width: 760px;
+}
+div.columns5 {
+    float: left;
+    width: 950px;
+}
+
+#primaryContent {
+    margin: 0px;
+}
+#secondaryContent {
+    margin: 0px 0px 0px 580px;
+    width: 380px;
+}
+
+#primaryContent div.content {
+    margin-right: 2.0em;
+}
+#secondaryContent div.content {
+    margin-left: 1.4em;
+}
+
+
+/**
+ * Footer 
+ */
+#footer {
+    clear: both;
+}
+
+#footer-inner {
+    margin: 0px auto;
+}
+#footer .footer-about,
+#footer .footer-other {
+    margin-bottom: 40px;
+}
+
+#footer .footer-about {
+    width: 380px;
+    float: left;
+}
+#footer .footer-other {
+    margin-left: 570px;
+    width: 380px;
+}

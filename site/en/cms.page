@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<page name="page">
+	<data>
+		<name><![CDATA[]]>
+		</name>
+	</data>
+	<component name="header" id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/en">Home</link>
+					<link href="/en/cms" active="active">Hoborg CMS</link>
+					<link href="/en/blog">Blog</link>
+					<link href="http://projects.hoborglabs.com/">Projects</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="2">
+		<data />
+		<component name="content" id="3" parent-id="2">
+			<data>
+				<type><![CDATA[primaryContent]]></type>
+			</data>
+			<component name="column" id="4" parent-id="3">
+				<data>
+					<size><![CDATA[columns3]]></size>
+				</data>
+
+				<component name="paragraph" id="5" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>web-centric</strong> content managment.</h3>
+<p>Hoborg CMS is designed to give freedom and confidence in making content changes - because that's what it really is all about! You can prepare new content for your page, then save your work and switch to the last deployed content to fix some typos - without loosing your current work! Multiple users can edit the same page in multiple Workareas.</p>
+<p>All files and folders can be reverted to previously saved version or entire Edition! You can save your work as Editions. You can branch to different Workareas and all the time your current accepted content will be in Staging area which you can preview all the time.</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="6" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>Solid</strong> Core Functionalities.</h3>
+<p>Hoborg CMS is all about stability. Whole project is tested and build daily. We make sure that core functionality is simply bullet proof. All that allows you to develop your website without worrying about platform stability.</p>
+<p>You can always check Hoborg health on our Dashboard - you will find there all project's vital signs.</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="7" parent-id="4">
+					<data>
+						<text><![CDATA[<h3>CMS <strong>is not</strong> a front-end web application</h3>
+<p>CMS is for content management - not for serving content on runtime webserver. That is why Hoborg CMS is build from Content Service (CMS) and Display Service. Display Service is optimized for runtime servers, where Content Service is focused on easy content management.</p>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+		<component name="content" id="8" parent-id="2">
+			<data>
+				<type><![CDATA[secondaryContent]]></type>
+			</data>
+			<component name="column" id="9" parent-id="8">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+				<component name="paragraph" id="10" parent-id="9">
+					<data>
+						<text><![CDATA[<h4><strong>Hoborg CMS</strong> Architecture</h4>]]></text>
+					</data>
+				</component>
+			</component>
+			<component name="column" id="11" parent-id="8">
+				<data>
+					<size><![CDATA[column1]]></size>
+				</data>
+				<component name="paragraph" id="12" parent-id="11">
+					<data>
+						<text><![CDATA[<ul>
+<li>Version control</li>
+<li>Component based</li>
+<li>Full preview</li>
+<li>Continious content deployment</li>
+</ul>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+	</component>
+	<component file="includes/en/footer.page" id="15" />
+</page>

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<page name="page">
+	<data>
+		<name><![CDATA[Hoborg CMS]]></name>
+	</data>
+	<component name="header" id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/pl">Home</link>
+					<link href="/pl/cms" active="active">Hoborg CMS</link>
+					<link href="/pl/dashboard">Tablica</link>
+					<link href="http://projects.hoborglabs.com/">Projekty</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="2">
+		<data/>
+		<component name="content" id="3" parent-id="2">
+			<data>
+				<type><![CDATA[primaryContent]]></type>
+			</data>
+			<component name="column" id="4" parent-id="3">
+				<data>
+					<size><![CDATA[columns3]]></size>
+				</data>
+				<component name="paragraph" id="5" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>Nowoczesne</strong> Zażądzanie treścią.</h3>
+<p>Hoborg CMS został zaprojektowany z myślą o użytkowniku. Wersjonowanie Twojej strony nigdy jeszcze nie było tak łatwe - przywracaj poprzednie wersje plik&oacute;w, tw&oacute;rz całe Edycje swojej strony, zcalaj katalogi robocze! Hoborg CMS daje Ci pewność, kontrole i możliwość planowania przyszłych wydań Twojej strony. Użytkownicy mogą pracować w wielu katalogach roboczych jednocześnie, i publikować swoja prace lokalnie (Staging).</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="6" parent-id="4">
+					<data>
+						<text><![CDATA[<h3><strong>Solidna</strong> platforma.</h3>
+<p>Stabilność jest najważniejsza dla Hoborg CMS. Projekt jest testowany automatycznie i przygotowywany do wydania każdego dnia. Dokładamy wszelkich starań aby podstawowe funkcji systemu były po prostu kulo-odporne. Wszystko to po to abyś m&oacute;gł spokojnie tworzyć swoją stronę bez obaw o stabilność platformy.</p>
+<p>Zawsze możesz sprawdzić stan Hoborg-a na naszej tablicy - znajdziesz tam wszystkie wskaźniki postępu naszych projekt&oacute;w.</p>]]></text>
+					</data>
+				</component>
+				<component name="paragraph" id="7" parent-id="4">
+					<data>
+						<text><![CDATA[<h3>CMS <strong>to nie</strong> twoja strona.</h3>
+<p>CMS służy do zarządzania treścią - a nie do wyświetlania twojej strony w internecie. Dlatego Hoborg CMS składa się z "Serwisu Treści" (CMS) i "Serwisu Wyświetlania". Serwis Wyświetlania jest zoptymalizowany dla potrzeb web-serwer&oacute;w, a Serwis Treści ma za zadanie ułatwić edycje oraz zarządzanie treścią.</p>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+		<component name="content" id="8" parent-id="2">
+			<data>
+				<type><![CDATA[secondaryContent]]></type>
+			</data>
+			
+			
+			
+		<component name="column" id="9" parent-id="8">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+				
+			<component name="paragraph" id="10" parent-id="9">
+					<data>
+						<text><![CDATA[<h4><strong></strong>Architektura <strong>Hoborg CMS</strong>.</h4>]]></text>
+					</data>
+				</component><component name="paragraph" id="11" parent-id="9"><data><text><![CDATA[<ul>
+<li>Kontrola wersji.</li>
+<li>Oparte na komponentach.</li>
+<li>Pełny podgląd.</li>
+<li>Stale dostępna stabilna wersja.</li>
+</ul>]]></text></data></component></component></component>
+	</component>
+	<component file="includes/pl/footer.page" id="12"/>
+</page>
