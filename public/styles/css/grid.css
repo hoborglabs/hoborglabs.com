@@ -2,8 +2,8 @@
  Global CSS for hoborglabs.com
  */
 
-div.fullWidth {
-    width: 950px !important;
+.fullWidth {
+    width: 950px;
 }
 
 /* CSS clear */
@@ -127,16 +127,16 @@ div.columns5 {
 #footer-inner {
     margin: 0px auto;
 }
-#footer .footer-about,
-#footer .footer-other {
-    margin-bottom: 40px;
-}
+    .footer-about,
+    .footer-other {
+        margin-bottom: 40px;
+    }
 
-#footer .footer-about {
-    width: 380px;
-    float: left;
-}
-#footer .footer-other {
-    margin-left: 570px;
-    width: 380px;
-}
+    .footer-about {
+        width: 380px;
+        float: left;
+    }
+    .footer-other {
+        margin-left: 570px;
+        width: 380px;
+    }

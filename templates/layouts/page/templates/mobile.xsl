@@ -39,6 +39,7 @@
                 <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/modules.css" />
                 <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/dashboard.css" />
                 <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/handheld.css" />
+                <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
             </head>
             <body>
                 <xsl:value-of select="$H_SUB_COMPONENTS" disable-output-escaping="yes" />
