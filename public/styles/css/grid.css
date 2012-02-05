@@ -53,7 +53,7 @@ html[xmlns] .clearfix {
 }
 
 /** Logo */
-#headerInner img.logo {
+.logo {
     position: absolute;
     bottom: 0px;
 }
