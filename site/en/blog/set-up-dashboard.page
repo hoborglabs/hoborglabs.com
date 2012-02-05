@@ -31,7 +31,7 @@
                 </data>
                 <component name="paragraph" id="5" parent-id="4">
                     <data>
-                        <markdown file="/var/www/hoborglabs.local/site/en/blog/set-up-dashboard.md" />
+                        <markdown file="./../site/en/blog/set-up-dashboard.md" />
                     </data>
                 </component>
             </component>
