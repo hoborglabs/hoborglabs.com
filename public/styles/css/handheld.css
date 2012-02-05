@@ -10,6 +10,55 @@ body                {-webkit-tap-highlight-color: rgb(255,255,158);}
         width: auto;
     }
 
+@media only screen and (max-width: 768px) {
+
+	#header {
+		height: auto;
+	}
+		#headerInner {
+			height: auto;
+		}
+	img.logo {
+		float: left;
+		position: relative;
+		margin: 12px 0 0 4px;
+	}
+	#logo {
+		position: static;
+		height: 62px;
+		margin: 0 0 0 102px;
+		padding: 60px 0px 0px 0px;
+	}
+	#logo h2 {
+		color: #D2DCE5;
+		display: inline;
+		font-size: 1em;
+		padding-left: 0;
+		white-space: nowrap;
+	}
+	#menu {
+		position: static;
+		height: 26px;
+		padding: 6px 0px 0px 0px;
+	}
+		#menu li a {
+			padding: 4px 8px;
+			margin-left: 4px;
+			height: 16px;
+		}
+}
+
+@media only screen and (max-width: 480px) {
+	#logo {
+		height: 72px;
+		padding: 50px 0px 0px 0px;
+		margin: 0 0 0 116px;
+	}
+	#logo h2 {
+		display: block;
+	}
+}
+
 /*      Tablet Layout: 768px.
         Gutters: 24px.
         Outer margins: 28px.
