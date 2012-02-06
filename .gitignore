@@ -11,6 +11,11 @@
 /application/*/conf/*/*.ini
 !/application/*/conf/*/*.default.ini
 
+## 
+# vendors
+/vendors/dashboard/*
+!/vendors/dashboard/install.sh
+
 /build.properties
 /build
 /logs
