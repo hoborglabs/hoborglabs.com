@@ -111,6 +111,7 @@ h4 strong {
 #main img {
 	padding: 3px;
 	border: solid 1px #e1e1e1;
+	max-width: 100%;
 }
 
 img.logo {
