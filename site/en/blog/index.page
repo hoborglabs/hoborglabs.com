@@ -35,6 +35,8 @@
 						<text><![CDATA[
 <p>Tis i a place for things that we find interesting or important.</p>
 <ul>
+    <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
+    <li><a href="/en/blog/git-config">[2012-03-20] Configure your git.</a></li>
     <li><a href="/en/blog/phpunit_git_bisect">[2012-02-09] Debuging with GIT bisect and phpunit.</a></li>
     <li><a href="/en/blog/set-up-dashboard">[2012-01-10] How to set-up your Dashboard.</a></li>
 </ul>
