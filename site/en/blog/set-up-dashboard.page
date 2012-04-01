@@ -46,6 +46,8 @@
                     <size><![CDATA[columns2]]></size>
                 </data>
 
+                <component file="includes/en/blog/posts.page" id="16" />
+
                 <component name="paragraph" id="11" parent-id="10">
                     <data>
                         <text><![CDATA[

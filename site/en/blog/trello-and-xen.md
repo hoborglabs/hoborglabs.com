@@ -1,9 +1,10 @@
 ### __Trello__ and __Xen__ Server
 
 This is how I use [trello](http://trello.com) board to keep a list of
-my VMs up to date :) It's of course all automated.
+my VMs up to date :) It's of course all automated and definitely not
+a production environment solution ;)
 
-It's main and only purpose is to allow anyone with access to intrnet
+It's main and only purpose is to allow anyone with access to Internet
 (and added to my trello board) to check which machine is running.
 It also provides basic information about memory usage, IP address,
 up time, ...

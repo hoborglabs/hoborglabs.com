@@ -1,4 +1,67 @@
-# Git Configuraiton
+### Configure your __GIT__
+
+I think there is no point in advertising GiT - it's simply awesome!
+But it's even more awesome if you configure it to fit your needs.
+
+I like GUI, and I want to use it when I can. I also like to SSH to my
+machines, and then I want to use plain and simple console output.
+
+### Viewing diffs using GUI
+
+Few month ago I come across a config which allows you to use meld
+for `git diff`. And for a while it was good ... But one day I wanted
+to make a simple `.patch` file, which turns out to be real pain without
+disabling my handy meld config.
+
+Now I have new better config which doesn't use external scripts and it's
+all pure GIT.
+
+~~~~
+[alias]
+    df = difftool -x meld
+    patch = diff --no-prefix
+
+[difftool]
+    prompt = false
+~~~~
+
+And now I can simply use following commands
+~~~~
+git df // that will open meld and show current diff
+git patch // to generate patch
+git diff // to use plain and simple console diff when I'm ssh-ing
+~~~~
+
+
+### Colours
+
+For some reason I didn't like the default colour scheme. It's really
+easy to change it to whatever you want.
+
+~~~~
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+~~~~
+
+
+Here's my whole config file
 
 ~~~~
 [core]
