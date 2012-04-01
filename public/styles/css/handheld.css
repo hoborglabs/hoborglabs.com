@@ -159,6 +159,9 @@ px      68    160    252    344    436    */
 	#headerInner {
 		width: auto;
 	}
+	#logo h1 {
+		font-size: 28px;
+	}
     .fullWidth {
         width: 97%;
         margin-left: auto;

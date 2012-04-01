@@ -31,7 +31,7 @@
                 </data>
                 <component name="paragraph" id="5" parent-id="4">
                     <data>
-                        <markdown file="./../site/en/blog/set-up-dashboard.md" />
+                        <markdown file="./../site/en/blog/phpunit_git_bisect.md" />
                     </data>
                 </component>
             </component>

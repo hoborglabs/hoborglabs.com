@@ -54,8 +54,6 @@ html[xmlns] .clearfix {
 
 /** Logo */
 .logo {
-    position: absolute;
-    bottom: 0px;
 }
 #logo {
     position: absolute;

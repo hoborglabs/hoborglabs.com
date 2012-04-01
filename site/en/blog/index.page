@@ -34,12 +34,10 @@
 						<text><![CDATA[<h3><strong>Hoborg</strong> Laboratories Blog.</h3>]]></text>
 						<text><![CDATA[
 <p>Tis i a place for things that we find interesting or important.</p>
-<ul>
-    <li><a href="/en/blog/set-up-dashboard">How to set-up your Dashboard.</a></li>
-</ul>
                         ]]></text>
 					</data>
 				</component>
+				<component file="includes/en/blog/posts.page" id="16" />
 			</component>
 		</component>
 		<component name="content" id="9" parent-id="2">
