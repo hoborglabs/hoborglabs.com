@@ -3,6 +3,7 @@
 	<data>
 		<name><![CDATA[Tablica HoborgLabs]]></name>
 	</data>
+	<component file="includes/google-analytics.page" id="16" />
 	<component name="header" id="1">
 		<data>
 			<titlePrimary><![CDATA[hoborg]]></titlePrimary>

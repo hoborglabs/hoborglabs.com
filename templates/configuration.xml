@@ -19,6 +19,8 @@
 	<component name="article"      template="components/content/article.xsl" folder="components/content/article" />
 
 	<!-- MODULES -->
+	<component name="google-analytics" folder="components/modules/google/analytics" />
+	
     <component name="image"        template="components/modules/image/templates/default.xsl" folder="components/modules/image" />
     <component name="paragraph"    template="components/modules/paragraph/templates/default.xsl" folder="components/modules/paragraph" />
     <component name="jenkins"      template="components/modules/jenkins/templates/default.xsl" folder="components/modules/jenkins" />

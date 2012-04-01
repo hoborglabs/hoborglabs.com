@@ -4,6 +4,7 @@
 		<name><![CDATA[]]>
 		</name>
 	</data>
+	<component file="includes/google-analytics.page" id="16" />
 	<component name="header" id="1">
 		<data>
 			<titlePrimary><![CDATA[hoborg]]></titlePrimary>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page name="include">
+	<component name="google-analytics">
+		<data>
+			<enabled>1</enabled>
+			<account>UA-26737702</account>
+		</data>
+	</component>
+</page>
