@@ -25,6 +25,9 @@
                 <meta name="keywords" content="" />
                 <meta name="description" content="" />
 
+                <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+
                 <!-- 
                 <script src="{$H_ROOT_PUBLIC}/scripts/mootools_src.js"></script>
                 -->
