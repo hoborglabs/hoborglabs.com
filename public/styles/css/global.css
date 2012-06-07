@@ -94,16 +94,19 @@ h3, h4, h5, h6 {
 	color: #184366;
 }
 h1 span,
-h1 strong {
+h1 strong,
+h1 b {
 	font-size: 130%;
 	font-weight: bold;
 }
 h3 span,
-h3 strong {
+h3 strong,
+h3 b {
 	font-weight: bold;
 }
 h4 span,
-h4 strong {
+h4 strong
+h4 b {
 	font-weight: bold;
 }
 
@@ -204,12 +207,13 @@ p {
 	display: inline;
 	color: #fff;
 	font-size: 2.6em;
+	text-shadow: 1px 2px 7px black;
 }
 #logo h2 {
 	display: inline;
 	padding-left: 0.5em;
 	color: #D2DCE5;
-	font-size: 1.0em;
+	font-size: 1.0em;;
 }
 
 /* Menu */
@@ -242,7 +246,8 @@ p {
  * Main
  */
 #main {
-	background: #fff url('../gfx/main-bg.gif') 0px 1px repeat-x;
+	background: #fff url('../gfx/bg.jpg') 0px 0px repeat-x;
+	border-top: 2px white solid;
 	padding: 0px 0px 20px 0px;
 }
 #main_inner ul {
@@ -264,7 +269,8 @@ p {
 	margin-bottom: 0.8em;
 	clear: left;
 }
-#main_inner h3 strong {
+#main_inner h3 strong,
+#main_inner h3 b {
 	font-size: 32px;
 }
 #main_inner h4 {
@@ -273,7 +279,8 @@ p {
 	margin-bottom: 1.4em;
 	margin-top: 0.95em;
 }
-#main_inner h4 strong {
+#main_inner h4 strong,
+#main_inner h4 b {
 	font-size: 22px;
 }
 /** Post */
@@ -342,7 +349,8 @@ margin-left: 1.1em;
 	font-size: 24px;
 	margin: 20px 0px 10px 0px;
 }
-#footer h4 strong {
+#footer h4 strong,
+#footer h4 b {
 	font-size: 30px;
 }
 
@@ -353,7 +361,8 @@ margin-left: 1.1em;
 	font-size: 18px;
 	border-bottom: 1px #FFFFFF dashed;
 }
-#footer h5 strong {
+#footer h5 strong,
+#footer h5 b {
 	font-size: 24px;
 }
 

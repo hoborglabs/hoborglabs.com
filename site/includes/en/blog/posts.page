@@ -2,7 +2,7 @@
 <page name="include">
 	<component name="paragraph" id="5" parent-id="4">
 		<data>
-			<text><![CDATA[<h4>Latest blog posts.</h4>]]></text>
+			<text><![CDATA[<h4>Latest <b>blog</b> posts.</h4>]]></text>
 			<text><![CDATA[
 <ul>
 	<li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>

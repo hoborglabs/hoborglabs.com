@@ -45,8 +45,13 @@
 				</component>
 				<component name="paragraph" id="7" parent-id="4">
 					<data>
-						<text><![CDATA[<p>Hoborg Labolatories is a home for all my projects. Obviousely it    s all about Hoborg which is the core project (Zend Controllers and library).</p>
-<p>You can find out more about Hoborg CMS on <a href="../../../en/cms">its site</a>. All projects in my lab are build and tested on Hudson continues integration server.</p>]]></text>
+						<text><![CDATA[
+<p>Hoborg Labolatories is a home for all my projects. Obviousely it is all about Hoborg - the core project - 
+<a href="http://symfony.com">Symfony2</a> Bundles and Components.</p>
+<p>You can find out more about Hoborg CMS on <a href="/en/cms">its site</a>. All projects in my lab are build and 
+tested on Jenkins continues integration server. You can chekc health status of each project at 
+<a href="http://ci01.hoborglabs.com">ci01.hoborglabs.com</a></p>
+						]]></text>
 					</data>
 				</component>
 				
@@ -136,6 +141,7 @@ and add it to your dashboard!
 						<text><![CDATA[<p><sub>18 May 2011</sub><br />Hoborg CMS 0.7 is almost ready. This version brings another bunch of stories for easier and richer page editing experience.</p>]]></text>
 					</data>
 				</component>
+				<component file="includes/en/blog/posts.page" id="16" />
 			</component>
 		</component>
 	</component>
