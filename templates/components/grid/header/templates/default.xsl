@@ -7,10 +7,10 @@
 	<xsl:template match="/component">
 		<div id="header">
 		    <div class="flags">
-			    <a href="{$H_ROOT_PUBLIC}/pl" class="flag pl">PL</a>, <a href="{$H_ROOT_PUBLIC}/en" class="flag gb">EN</a>
+			    <a href="{$H_BASE_PATH}/pl" class="flag pl">PL</a>, <a href="{$H_BASE_PATH}/en" class="flag gb">EN</a>
 		    </div>
 			<div id="headerInner" class="fullWidth">
-				<img class="logo" src="{$H_ROOT_PUBLIC}/images/logo.png" />
+				<img class="logo" src="{$H_BASE_PATH}/images/logo.png" />
 				<div id="logo">
 					<h1>
 						<span>
@@ -48,7 +48,7 @@
 			</xsl:choose>
 		</xsl:variable>
 		<li class="{$class}">
-		    <a href="{$H_ROOT_PUBLIC}{@href}"><xsl:value-of disable-output-escaping="yes" select="." /></a>
+		    <a href="{$H_BASE_PATH}{@href}"><xsl:value-of disable-output-escaping="yes" select="." /></a>
 		</li>
 		<!-- 
 		<xsl:apply-templates name="linkLi">

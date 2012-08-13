@@ -25,11 +25,11 @@
 				<meta http-equiv="Content-Language" content="en" />
 				
 				<!-- 
-				<script src="{$H_ROOT_PUBLIC}/scripts/mootools_src.js"></script>
+				<script src="{$H_BASE_PATH}/scripts/mootools_src.js"></script>
 				 -->
 				
-				<link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/grid.css" />
-				<link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/global.css" />
+				<link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/grid.css" />
+				<link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/global.css" />
 <script type="text/javascript">
 
   var _gaq = _gaq || [];

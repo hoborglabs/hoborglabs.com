@@ -7,7 +7,7 @@
 	-->
 	<xsl:template name="InternalLink">
 		<xsl:param name="link" />
-		<a href="{$H_ROOT_PUBLIC}{$link/@href}">
+		<a href="{$H_BASE_PATH}{$link/@href}">
 			<xsl:value-of disable-output-escaping="yes" select="$link" />
 		</a>
 	</xsl:template>

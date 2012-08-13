@@ -29,19 +29,19 @@
                 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
                 <!-- 
-                <script src="{$H_ROOT_PUBLIC}/scripts/mootools_src.js"></script>
+                <script src="{$H_BASE_PATH}/scripts/mootools_src.js"></script>
                 -->
-                <script src="{$H_ROOT_PUBLIC}/scripts/jquery.js"></script>
-                <script src="{$H_ROOT_PUBLIC}/scripts/jquery.ui.js"></script>
-                <script src="{$H_ROOT_PUBLIC}/scripts/hoborg.jenkins.js"></script>
-                <script src="{$H_ROOT_PUBLIC}/scripts/hoborg.dashboard.redmine.js"></script>
-                <script src="{$H_ROOT_PUBLIC}/scripts/hoborg.dashboard.dateTime.js"></script>
+                <script src="{$H_BASE_PATH}/scripts/jquery.js"></script>
+                <script src="{$H_BASE_PATH}/scripts/jquery.ui.js"></script>
+                <script src="{$H_BASE_PATH}/scripts/hoborg.jenkins.js"></script>
+                <script src="{$H_BASE_PATH}/scripts/hoborg.dashboard.redmine.js"></script>
+                <script src="{$H_BASE_PATH}/scripts/hoborg.dashboard.dateTime.js"></script>
                 
-                <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/grid.css" />
-                <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/global.css" />
-                <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/modules.css" />
-                <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/dashboard.css" />
-                <link rel="stylesheet" type="text/css" media="all" href="{$H_ROOT_PUBLIC}/styles/css/handheld.css" />
+                <link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/grid.css" />
+                <link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/global.css" />
+                <link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/modules.css" />
+                <link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/dashboard.css" />
+                <link rel="stylesheet" type="text/css" media="all" href="{$H_BASE_PATH}/styles/css/handheld.css" />
                 <meta name="viewport" content="initial-scale = 1.0,maximum-scale = 1.0" />
             </head>
             <body>
