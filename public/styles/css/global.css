@@ -267,6 +267,7 @@ p {
 	font-size: 26px;
 	padding-bottom: 0.1em;
 	margin-bottom: 0.8em;
+	text-shadow: #FFF -2px -4px 0px;
 	clear: left;
 }
 #main_inner h3 strong,
@@ -278,6 +279,7 @@ p {
 	padding-bottom: 0.175em;
 	margin-bottom: 1.4em;
 	margin-top: 0.95em;
+	text-shadow: #FFF -2px -4px 0px;
 }
 #main_inner h4 strong,
 #main_inner h4 b {
