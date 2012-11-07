@@ -1,6 +1,6 @@
 imports:
-  - { resource: ./../../../vendors/HoborgDisplayService/application/DisplayService/conf/conf.yml }
   - { resource: parameters.ini }
+  - { resource: ./../config.yml }
 
 monolog:
   handlers:
