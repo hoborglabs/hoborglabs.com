@@ -5,6 +5,6 @@
 >
 <xsl:output method="html" encoding="utf-8" indent="yes"/>
 	<xsl:template match="/component">
-		<img src="{$H_ROOT_PUBLIC}{data/src}" alt="{data/alt}" class="{data/size} {data/align}" />
+		<img src="{$H_BASE_PATH}{data/src}" alt="{data/alt}" class="{data/size} {data/align}" />
 	</xsl:template>
 </xsl:stylesheet>

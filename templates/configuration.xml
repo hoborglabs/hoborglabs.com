@@ -1,4 +1,7 @@
 <templates>
+
+	<external src="./../vendors/hoborglabs/components" />
+	
 	<!-- LAYOUTS -->
 	<page name="page"              template="layouts/page/templates/default.xsl" folder="layouts/page" />
 	<component name="page"         template="layouts/page/templates/default.xsl" folder="layouts/page" />
