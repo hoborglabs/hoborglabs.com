@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<page name="page">
+    <data>
+        <name><![CDATA[Home]]></name>
+    </data>
+    <component file="includes/google-analytics.page" id="16" />
+    <component name="header" id="1">
+        <data>
+            <titlePrimary><![CDATA[hoborg]]></titlePrimary>
+            <titleSecondary><![CDATA[labs.com]]></titleSecondary>
+            <subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+            <menuLang><![CDATA[en]]></menuLang>
+            <menu>
+                <en>
+                    <link href="/en">Home</link>
+                    <link href="/en/cms">Hoborg CMS</link>
+                    <link href="/en/blog" active="active">Blog</link>
+                    <link href="http://projects.hoborglabs.com/">Projects</link>
+                </en>
+            </menu>
+        </data>
+    </component>
+    <component name="main" id="2">
+        <component name="content" id="3" parent-id="2">
+            <data>
+                <type><![CDATA[primaryContent]]></type>
+            </data>
+
+            <component name="column" id="4" parent-id="3">
+                <data>
+                    <size><![CDATA[columns3]]></size>
+                </data>
+                <component name="paragraph" id="5" parent-id="4">
+                    <data>
+                        <markdown file="./../site/en/blog/array-splice-on-safari.md" />
+                    </data>
+                </component>
+            </component>
+        </component>
+        <component name="content" id="9" parent-id="2">
+            <data>
+                <type><![CDATA[secondaryContent]]></type>
+            </data>
+
+            <component name="column" id="10" parent-id="9">
+                <data>
+                    <size><![CDATA[columns2]]></size>
+                </data>
+
+                <component file="includes/en/blog/posts.page" id="16" />
+
+                <component name="paragraph" id="11" parent-id="10">
+                    <data>
+                        <text><![CDATA[
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life's passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        ]]></text>
+                    </data>
+                </component>
+            </component>
+        </component>
+    </component>
+    <component file="includes/en/footer.page" id="15" />
+</page>
