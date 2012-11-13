@@ -5,6 +5,7 @@
 			<text><![CDATA[<h4>Latest <b>blog</b> posts.</h4>]]></text>
 			<text><![CDATA[
 <ul>
+    <li><a href="/en/blog/mustache">[2012-11-08] Why you should update mustache.js.</a></li>
     <li><a href="/en/blog/git-diff-mac">[2012-09-08] Visual `git diff` on MAC.</a></li>
     <li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>
     <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
