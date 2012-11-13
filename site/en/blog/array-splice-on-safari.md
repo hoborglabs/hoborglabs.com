@@ -227,4 +227,4 @@ function benchmark(m) {
 
 </div>
 </script>
-<script src="array-splice-on-safari.js"></script>
+<script src="/static/en/blog/array-splice-on-safari.js"></script>
