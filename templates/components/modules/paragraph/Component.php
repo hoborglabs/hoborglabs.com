@@ -11,12 +11,12 @@ class Paragraph extends Component {
 	public function prepareData() {
 
 		parent::prepareData();
-		foreach ($this->data->childNodes as $component) {
+		foreach ($this->data->documentElement->childNodes as $component) {
 			if ('markdown' === $component->nodeName) {
 				$mdFile = $component->getAttribute('file');
-				$textNode = $this->data->ownerDocument->importNode(
+				$textNode = $this->data->importNode(
 						new DOMElement('text', Markdown(file_get_contents($mdFile))), true);
-				$this->data->appendChild($textNode);
+				$this->data->documentElement->appendChild($textNode);
 			}
 		}
 		unset($component);
