@@ -2,8 +2,6 @@
 /.buildpath
 /.project
 
-/application/Commons/cache/*
-/application/Commons/logs/*
 
 # Configuration 
 /application/*/conf/*.ini
