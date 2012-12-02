@@ -1,0 +1,16 @@
+imports:
+  - { resource: parameters.ini }
+
+framework:
+  secret: %framework.secret%
+  csrf_protection: true
+  form: true
+
+  router:
+    resource: "@DisplayServiceBundle/Resources/config/default_routing.yml"
+    http_port: 80
+    https_port: 443
+
+  validation: { enable_annotations: true }
+
+  session:

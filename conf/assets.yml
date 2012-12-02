@@ -1,0 +1,32 @@
+scripts:
+  main.js:
+    files:
+      - scripts/jquery.js
+      - scripts/jquery.ui.js
+      - scripts/hoborg.jenkins.js
+      - scripts/hoborg.dashboard.redmine.js
+      - scripts/hoborg.dashboard.dateTime.js
+    filters:
+      - uglifyjs
+
+  rgraph.js:
+    files:
+      - scripts/rgraph/*
+    filters:
+      - yui_js
+
+styles:
+  css/main.css:
+    files:
+      - styles/css/grid.css
+      - styles/css/global.css
+      - styles/css/modules.css
+      - styles/css/dashboard.css
+      - styles/css/handheld.css
+
+filters:
+  uglifyjs:
+    class: \Assetic\Filter\UglifyJsFilter
+    params:
+      - /usr/local/bin/uglifyjs
+      - /usr/local/bin/node

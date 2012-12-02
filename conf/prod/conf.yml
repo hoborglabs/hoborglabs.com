@@ -1,5 +1,8 @@
+##
+# PRODUCTION configuration
+
 imports:
-  - { resource: ./../../../vendors/HoborgDisplayService/application/DisplayService/conf/conf.yml }
+  - { resource: ./../config.yml }
   - { resource: parameters.ini }
 
 monolog:
