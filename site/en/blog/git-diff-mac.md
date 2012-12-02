@@ -1,7 +1,7 @@
 ### Visual git diff on MAC
 
 On linux systems I use `meld` for graphical diff tool. On MAC I just
-started using DiffMerge and I must say it does the job.
+started using [DiffMerge](http://www.sourcegear.com/diffmerge/) and I must say it does the job.
 
 Here's your git configuration snippet.
 ~~~~
@@ -13,6 +13,8 @@ Here's your git configuration snippet.
     prompt = false
 ~~~~
 
-`git df` - visual diff
-`git diff` - console diff
+`git df` - visual diff  
+`git diff` - console diff  
 `git patch` - generate patch file
+
+You can check my other post about [git configuration](/en/blog/git-config)
