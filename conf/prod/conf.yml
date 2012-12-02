@@ -1,6 +1,9 @@
+##
+# PRODUCTION configuration
+
 imports:
-  - { resource: parameters.ini }
   - { resource: ./../config.yml }
+  - { resource: parameters.ini }
 
 monolog:
   handlers:

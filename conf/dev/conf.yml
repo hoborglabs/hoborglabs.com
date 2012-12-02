@@ -1,7 +1,10 @@
+##
+# DEVELOPMENT configuration
+
 imports:
-  - { resource: parameters.ini }
-  - { resource: ./../prod/parameters.ini }
   - { resource: ./../config.yml }
+  - { resource: ./../prod/parameters.ini }
+  - { resource: parameters.ini }
 
 #web_profiler:
 #  toolbar: true

@@ -61,9 +61,10 @@ function squashTokens(tokens) {
 #### Why **V8** was so **Fast**
 
 Why mustache runs so fast on V8?  
-I'm not sure if that's true or not, but apparently `splice(index, 1)`
+<del>I'm not sure if that's true or not, but apparently `splice(index, 1)`
 was optimized and runs arround x100 faster then for instance 
-`splice(index, 2)` - that's something I need to test :)
+`splice(index, 2)` - that's something I need to test :)</del>  
+It's simply because V8 is amazing. 
 
 
 
