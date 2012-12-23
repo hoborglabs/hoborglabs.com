@@ -27,38 +27,30 @@
 			<data>
 				<type><![CDATA[primaryContent]]></type>
 			</data>
-			<component name="column" id="6" parent-id="5">
-				<data>
-					<size><![CDATA[columns3]]></size>
-				</data>
-
-				<component id="7" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Display Service.</h3>
-<p>Display Service is a small i simple Symfony2 bundle for generating pages from XML data files using XSLT templates.</p><p>It can also generate static HTML.</p>]]></text></data></component>
-				<component id="8" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Dashboard.</h3>
-<p>It's all about widgets&nbsp;collecting&nbsp;data from all your systems. It's an&nbsp;aggregation&nbsp;tool. In most cases it's used with tools like splunk or&nbsp;graphite.</p>]]></text></data></component>
-				<component id="9" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Concept hub</h3>
-<p>Concept hub is a tiny side project. It should help you share your designs with your clients. It allows you to zoom in/out and drag images.</p><p><a href="http://concepthub.hoborglabs.com/hub/?project=demo" title="Link: http://concepthub.hoborglabs.com/hub/?project=demo">http://concepthub.hoborglabs.com/hub/?project=demo</a><br></p>]]></text></data></component>
-			</component>
+			<component id="6" name="column" parent-id="5"><data><size><![CDATA[columns3]]></size></data><component id="7" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Hoborg Labs <b>Projects</b></h3><p>This is the list of Open Source projects branded with HoborgLabs.</p><h3>Display Service.</h3>
+<p>Display Service is a small &amp; simple Symfony2 bundle for generating pages from XML data files using XSLT templates.</p><p>It is simple solution for your blog or homepage. You can generate files on-the-fly on your dev machine, and generate static HTML files for your production server.</p>]]></text></data></component><component id="8" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Dashboard.</h3>
+<p>It's all about widgets&nbsp;collecting&nbsp;data from all your systems. It's an&nbsp;aggregation&nbsp;tool. In most cases it's used with tools like splunk or&nbsp;graphite.</p>]]></text></data></component><component id="9" name="image" parent-id="6"><data><src><![CDATA[/images/projects-dashboard.png]]></src><alt><![CDATA[Dashboard]]></alt><align><![CDATA[center]]></align><size><![CDATA[columns2]]></size></data></component><component id="10" name="paragraph" parent-id="6"><data><text><![CDATA[<p>Dashboard is easy to setup, and allows you to plug in to your graphite.</p>]]></text></data></component><component id="11" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Concept hub</h3>
+<p>Concept hub is a tiny side project. It should help you share your designs with your clients. It allows you to zoom in/out and drag images.</p><p><a href="http://concepthub.hoborglabs.com/hub/?project=demo" title="Link: http://concepthub.hoborglabs.com/hub/?project=demo">http://concepthub.hoborglabs.com/hub/?project=demo</a><br></p>]]></text></data></component></component>
 		</component>
-		<component name="content" id="10" parent-id="4">
+		<component name="content" id="12" parent-id="4">
 			<data>
 				<type><![CDATA[secondaryContent]]></type>
 			</data>
-			<component name="column" id="11" parent-id="10">
+			<component name="column" id="13" parent-id="12">
 				<data>
 					<size><![CDATA[columns2]]></size>
 				</data>
-				<component name="paragraph" id="12" parent-id="11">
+				<component name="paragraph" id="14" parent-id="13">
 					<data>
 						<text><![CDATA[<h4><strong>Hoborg CMS</strong> Architecture</h4>]]></text>
 					</data>
 				</component>
 			</component>
-			<component name="column" id="13" parent-id="10">
+			<component name="column" id="15" parent-id="12">
 				<data>
 					<size><![CDATA[column1]]></size>
 				</data>
-				<component name="paragraph" id="14" parent-id="13">
+				<component name="paragraph" id="16" parent-id="15">
 					<data>
 						<text><![CDATA[<ul>
 <li>Version control</li>
@@ -71,5 +63,5 @@
 			</component>
 		</component>
 	</component>
-	<component file="includes/en/footer.page" id="15" parent-id="1"/>
+	<component file="includes/en/footer.page" id="17" parent-id="1"/>
 </page>
