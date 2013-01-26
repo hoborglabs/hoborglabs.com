@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<page name="page">
+    <data>
+        <name><![CDATA[Blog - Jmeter and BeanShell]]></name>
+    </data>
+    <component file="includes/google-analytics.page" id="16" />
+    <component name="header" id="1">
+        <data>
+            <titlePrimary><![CDATA[hoborg]]></titlePrimary>
+            <titleSecondary><![CDATA[labs.com]]></titleSecondary>
+            <subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+            <menuLang><![CDATA[en]]></menuLang>
+            <menu>
+                <en>
+                    <link href="/en">Home</link>
+                    <link href="/en/cms">Hoborg CMS</link>
+                    <link href="/en/blog" active="active">Blog</link>
+                    <link href="http://projects.hoborglabs.com/">Projects</link>
+                </en>
+            </menu>
+        </data>
+    </component>
+    <component name="main" id="2">
+        <component name="content" id="3" parent-id="2">
+            <data>
+                <type><![CDATA[primaryContent]]></type>
+            </data>
+
+            <component name="column" id="4" parent-id="3">
+                <data>
+                    <size><![CDATA[columns3]]></size>
+                </data>
+                <component name="paragraph" id="5" parent-id="4">
+                    <data>
+                        <markdown><![CDATA[
+### Jmeter and **BeanShell**
+
+If you're using Jmeter for you load testing, and you not yet discovered
+beanShell I can honestly tell that you are missing a lot. Seriously!
+
+I'm performance engineer at BSkyB, and couple of times a year we need
+to test how our platform reacts to all sorts of heavy load. W have been
+using Jmeter as our main tool, and from day one the biggest challenge
+was to have a full control during load testing.  
+As many of you know, Jmeter comes with build in 
+[Thread Group](http://jmeter.apache.org/usermanual/component_reference.html#Thread_Group)
+component. It works absolutely fine, but it's not very useful in real
+life. There is also [Ultimate Thread Group](http://code.google.com/p/jmeter-plugins/wiki/UltimateThreadGroup)
+plugin, which is great, but it was still not enough for us.
+
+
+
+#### A little **background**
+
+<img class="column1 right" src="/images/blog/jmeter-and-beanshell-mixer.jpg" />
+
+During load testing we need to be able to change load on different
+components of the system. Ultimately we need a big mixing console with
+uncountable number of knobs.
+
+Imagine a 4 hour long load test where you have to test all key 
+components of your system. During that 4 hours you probably would like
+to control how many users try to login to your system, brows your
+website, recover login details etc. In many cases your company is 
+running more then one site, which makes it even more fun. On top of
+that all you have your DevOps and PlatformOps engineers screening from
+time to time that DB Servers|Web Servers|Cache Servers|Backend BlackBox
+is about to explode and you have to adjust the load immediately.
+
+
+
+#### Our **solution**
+
+With carefully designed test plans and use of user properties you can
+very easily control you test run on the fly with a little help from
+BeanShell.
+
+**First**, split you test plans by functional components. For instance
+have a one fragment for login-logout flow, another one for website
+browsing, registration process, ... you get the idea.  
+**Next**, design your test profile using your fragments. Busy weekend
+can be all about login-logout and website browsing and a test before
+massive marketing campaign will concentrate on registration process.
+
+<img class="column1 left" src="/images/blog/jmeter-and-beanshell-plan.png" />
+
+Now the trick is in [Gaussian Random Timer](http://jmeter.apache.org/usermanual/component_reference.html#Gaussian_Random_Timer)
+and all kind of [Logic Controllers](http://jmeter.apache.org/usermanual/component_reference.html#logic_controllers).
+In you main test plan, simply include your test fragments and add some
+Gaussina Random Timers. That will allow you to slow down whole frag.
+
+"And so what?" you might ask! But the trick is in the values you put in
+your Timer. Instead of adding boring integers, lets put a user property
+with some reasonable default values.
+
+That is how it can look:
+~~~~~
+Deviation (in milliseconds): ${__P(login.rsleep,1000)}
+Constant Delay Offeset (in milliseconds): ${__P(login.sleep,2000)}
+~~~~~
+
+Now imagine you can change these values while Jmeter executes your test
+plan :) - how awesome is that?
+
+<img class="columns3 center" src="/images/blog/jmeter-and-beanshell-graph.png" />
+
+
+
+#### enter **BeanShell**
+
+First you have to enable BeanSehll server on your jmeter load 
+generators.  
+...
+
+Now all you need is bunch of small scripts you can use to controll to
+your test plan user properties.  
+...
+
+...
+
+And just to make things a little bit better, create 
+live-user.properties and staging-user.properties with some initial 
+values for each environment.
+
+                        ]]></markdown>
+                    </data>
+                </component>
+            </component>
+        </component>
+        <component name="content" id="9" parent-id="2">
+            <data>
+                <type><![CDATA[secondaryContent]]></type>
+            </data>
+
+            <component name="column" id="10" parent-id="9">
+                <data>
+                    <size><![CDATA[columns2]]></size>
+                </data>
+
+                <component file="includes/en/blog/posts.page" id="16" />
+
+                <component name="paragraph" id="11" parent-id="10">
+                    <data>
+                        <text><![CDATA[
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life's passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        ]]></text>
+                    </data>
+                </component>
+            </component>
+        </component>
+    </component>
+    <component file="includes/en/footer.page" id="15" />
+</page>
