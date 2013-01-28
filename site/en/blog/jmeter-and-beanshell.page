@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <page name="page">
     <data>
-        <name><![CDATA[Blog - Jmeter and BeanShell]]></name>
+        <name><![CDATA[Jmeter and BeanShell]]></name>
     </data>
     <component file="includes/google-analytics.page" id="16" />
     <component name="header" id="1">
@@ -38,32 +38,32 @@
 If you're using Jmeter for you load testing, and you not yet discovered
 beanShell I can honestly tell that you are missing a lot. Seriously!
 
-I'm performance engineer at BSkyB, and couple of times a year we need
-to test how our platform reacts to all sorts of heavy load. W have been
-using Jmeter as our main tool, and from day one the biggest challenge
-was to have a full control during load testing.  
-As many of you know, Jmeter comes with build in 
-[Thread Group](http://jmeter.apache.org/usermanual/component_reference.html#Thread_Group)
-component. It works absolutely fine, but it's not very useful in real
-life. There is also [Ultimate Thread Group](http://code.google.com/p/jmeter-plugins/wiki/UltimateThreadGroup)
-plugin, which is great, but it was still not enough for us.
-
 
 
 #### A little **background**
 
+I'm performance engineer at BSkyB, and couple of times a year we test
+how our platform reacts to all sorts of heavy load. W have been using
+Jmeter as our main tool, and from day one the biggest challenge was to
+have a full control during load testing.  
+As many of you know, Jmeter comes with build in 
+[Thread Group](http://jmeter.apache.org/usermanual/component_reference.html#Thread_Group)
+component. It works absolutely fine, but it's not very useful in real
+life. There is also [Ultimate Thread Group](http://code.google.com/p/jmeter-plugins/wiki/UltimateThreadGroup)
+plugin, which is great, but it was still not enough.
+
 <img class="column1 right" src="/images/blog/jmeter-and-beanshell-mixer.jpg" />
 
 During load testing we need to be able to change load on different
-components of the system. Ultimately we need a big mixing console with
-uncountable number of knobs.
+components of the system. It is almost like we need a big mixing 
+console with uncountable number of knobs for adjusting all aspects of
+load test we are running.
 
-Imagine a 4 hour long load test where you have to test all key 
-components of your system. During that 4 hours you probably would like
-to control how many users try to login to your system, brows your
+Imagine a 4 hour long load test, during that time you would probably
+like to control how many users try to login to your system, brows your
 website, recover login details etc. In many cases your company is 
 running more then one site, which makes it even more fun. On top of
-that all you have your DevOps and PlatformOps engineers screening from
+that you have your DevOps and PlatformOps engineers screaming from
 time to time that DB Servers|Web Servers|Cache Servers|Backend BlackBox
 is about to explode and you have to adjust the load immediately.
 
@@ -76,10 +76,10 @@ very easily control you test run on the fly with a little help from
 BeanShell.
 
 **First**, split you test plans by functional components. For instance
-have a one fragment for login-logout flow, another one for website
+have one fragment for login-logout flow, another one for website
 browsing, registration process, ... you get the idea.  
 **Next**, design your test profile using your fragments. Busy weekend
-can be all about login-logout and website browsing and a test before
+can be all about login-logout and website browsing, where a test before
 massive marketing campaign will concentrate on registration process.
 
 <img class="column1 left" src="/images/blog/jmeter-and-beanshell-plan.png" />
@@ -89,9 +89,9 @@ and all kind of [Logic Controllers](http://jmeter.apache.org/usermanual/componen
 In you main test plan, simply include your test fragments and add some
 Gaussina Random Timers. That will allow you to slow down whole frag.
 
-"And so what?" you might ask! But the trick is in the values you put in
-your Timer. Instead of adding boring integers, lets put a user property
-with some reasonable default values.
+"*And so what?*" you might ask! But the trick is in the values you put in
+your Timers. Instead of adding boring integers, lets put an user
+property with some reasonable default values.
 
 That is how it can look:
 ~~~~~
@@ -100,7 +100,8 @@ Constant Delay Offeset (in milliseconds): ${__P(login.sleep,2000)}
 ~~~~~
 
 Now imagine you can change these values while Jmeter executes your test
-plan :) - how awesome is that?
+plan, allowing you to shape load how ever you like :) - how awesome is
+that?
 
 <img class="columns3 center" src="/images/blog/jmeter-and-beanshell-graph.png" />
 
@@ -108,18 +109,50 @@ plan :) - how awesome is that?
 
 #### enter **BeanShell**
 
-First you have to enable BeanSehll server on your jmeter load 
-generators.  
-...
+First you have to enable BeanSehll on your remote jmeter servers. To do
+that, put (uncomment) these lines in your `user.properties`
 
-Now all you need is bunch of small scripts you can use to controll to
-your test plan user properties.  
-...
+~~~~~
+beanshell.server.port=9000
+bin/jmeter.properties:beanshell.server.file=./extras/startup.bsh
+~~~~~
 
-...
+Default startup.bsh defines some basic functions like `getprop`,
+`setprop`, `printprop` and more.
+
+Now all you need is bunch of small scripts you can use to control your
+test plan user properties. Right now I'm using only two very simple
+scripts:
+
+* Properites Status - dispaly a list of all user properties
+* Properties Control - change value of a given numeric property
+
+And this is an example of how you can use beanShell script to change
+`login.sleep` property to 500 over 5 minutes on `jmeter01.company.net`
+jmeter server.
+~~~~~
+$ java -jar ../lib/bshclient.jar jmeter01.company.net 9000 parameter-controll.bsh login.sleep
+current value: 2000
+$ java -jar ../lib/bshclient.jar jmeter01.company.net 9000 parameter-controll.bsh login.sleep 500 5min
+2000                                                                500
+###############################                                       >
+~~~~~
+
+#### All together now
+
+Let's put it all together.  
+We have bunch of test plans with `If Controllers` and `Gaussian
+Timers`. We can put them together like lego pices to build our master
+test plan. And we can simply modify our user jorneys, on the fly.
+
+**NOTE:** There is however one thing which you will have to plan up
+front - the maximu throgput. One thing that you can't do is to spin-up
+new threads.
+
+You can find my beanShell scripts on gits.
 
 And just to make things a little bit better, create 
-live-user.properties and staging-user.properties with some initial 
+`live-user.properties` and `staging-user.properties` with some initial
 values for each environment.
 
                         ]]></markdown>
