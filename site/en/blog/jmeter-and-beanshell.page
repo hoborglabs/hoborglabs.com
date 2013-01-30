@@ -69,24 +69,55 @@ is about to explode and you have to adjust the load immediately.
 
 
 
-#### Our **solution**
+#### Our **solution** {#our-solution}
 
 With carefully designed test plans and use of user properties you can
 very easily control you test run on the fly with a little help from
 BeanShell.
 
 **First**, split you test plans by functional components. For instance
-have one fragment for login-logout flow, another one for website
-browsing, registration process, ... you get the idea.  
+have one jmx for login-logout flow, another one for website
+browsing, registration process, ... you get the idea. Check out
+[Test Fragment](http://jmeter.apache.org/usermanual/component_reference.html#Test_Fragment)
+and [Include Controller](http://jmeter.apache.org/usermanual/component_reference.html#Include_Controller)
+Components. Put one Test Fragment in your frag jmx file, and include it
+from your main test plan using Include Controller. Make sure your 
+`user.dir` is set correctly on remote servers. It will be use to 
+determine full path of your jmx file.
+
 **Next**, design your test profile using your fragments. Busy weekend
 can be all about login-logout and website browsing, where a test before
 massive marketing campaign will concentrate on registration process.
+
+<!-- 
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Weekend</th>
+      <th>Marketing Campaign</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Login, Logout</th>
+      <td>10</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>Website Browse</th>
+      <td>30</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+-->
 
 <img class="column1 left" src="/images/blog/jmeter-and-beanshell-plan.png" />
 
 Now the trick is in [Gaussian Random Timer](http://jmeter.apache.org/usermanual/component_reference.html#Gaussian_Random_Timer)
 and all kind of [Logic Controllers](http://jmeter.apache.org/usermanual/component_reference.html#logic_controllers).
-In you main test plan, simply include your test fragments and add some
+In your main test plan, simply include test fragments and add some
 Gaussina Random Timers. That will allow you to slow down whole frag.
 
 "*And so what?*" you might ask! But the trick is in the values you put in
@@ -96,7 +127,7 @@ property with some reasonable default values.
 That is how it can look:
 ~~~~~
 Deviation (in milliseconds): ${__P(login.rsleep,1000)}
-Constant Delay Offeset (in milliseconds): ${__P(login.sleep,2000)}
+Constant Delay Offset (in milliseconds): ${__P(login.sleep,2000)}
 ~~~~~
 
 Now imagine you can change these values while Jmeter executes your test
@@ -104,6 +135,9 @@ plan, allowing you to shape load how ever you like :) - how awesome is
 that?
 
 <img class="columns3 center" src="/images/blog/jmeter-and-beanshell-graph.png" />
+
+If you are using endless loops in your farg, include your Gaussian
+Timer inside that loop. Read more about how Jmeter applies Timers.
 
 
 
@@ -114,46 +148,54 @@ that, put (uncomment) these lines in your `user.properties`
 
 ~~~~~
 beanshell.server.port=9000
-bin/jmeter.properties:beanshell.server.file=./extras/startup.bsh
+beanshell.server.file=./extras/startup.bsh
 ~~~~~
 
 Default startup.bsh defines some basic functions like `getprop`,
 `setprop`, `printprop` and more.
 
 Now all you need is bunch of small scripts you can use to control your
-test plan user properties. Right now I'm using only two very simple
-scripts:
-
-* Properites Status - dispaly a list of all user properties
-* Properties Control - change value of a given numeric property
+test plan user properties. Right now I'm using only one very simple
+script `properties-control.bsh`
 
 And this is an example of how you can use beanShell script to change
 `login.sleep` property to 500 over 5 minutes on `jmeter01.company.net`
 jmeter server.
 ~~~~~
-$ java -jar ../lib/bshclient.jar jmeter01.company.net 9000 parameter-controll.bsh login.sleep
+$ alias jmeter01="java -jar ../lib/bshclient.jar jmeter01.company.net 9000"
+$ jmeter01 parameter-control.bsh @get login.sleep
 current value: 2000
-$ java -jar ../lib/bshclient.jar jmeter01.company.net 9000 parameter-controll.bsh login.sleep 500 5min
+$ jmeter01 parameter-control.bsh @update login.sleep 500 5min
+ > UPDATE login.sleep (300s)
 2000                                                                500
-###############################                                       >
+###############################
 ~~~~~
 
-#### All together now
+#### All together now {#all-together}
 
 Let's put it all together.  
 We have bunch of test plans with `If Controllers` and `Gaussian
-Timers`. We can put them together like lego pices to build our master
-test plan. And we can simply modify our user jorneys, on the fly.
+Timers`. We can put them together like lego pieces to build our master
+test plan. And we can simply modify our user journeys throughput on the
+fly.
 
 **NOTE:** There is however one thing which you will have to plan up
-front - the maximu throgput. One thing that you can't do is to spin-up
-new threads.
+front - the maximu requests/s or journeys/s. One thing that you can't do is to spin-up
+new jmeter threads.  
+For that run you test with disabled timers and get approximate execution
+time for one journey. Now simply calculate number of journeys and 
+request for given number of threads.
 
 You can find my beanShell scripts on gits.
 
 And just to make things a little bit better, create 
 `live-user.properties` and `staging-user.properties` with some initial
 values for each environment.
+
+
+
+### Test Fragments and Incliudes {#test-fragments}
+
 
                         ]]></markdown>
                     </data>
