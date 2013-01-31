@@ -36,16 +36,17 @@
 ### Jmeter and **BeanShell**
 
 If you're using Jmeter for you load testing, and you not yet discovered
-beanShell I can honestly tell that you are missing a lot. Seriously!
+BeanShell Server I can honestly tell that you are missing a lot.
+Seriously!
 
 
 
-#### A little **background**
+#### A little **background** {#background}
 
 I'm performance engineer at BSkyB, and couple of times a year we test
-how our platform reacts to all sorts of heavy load. W have been using
+how our platform reacts to all sorts of heavy load. We have been using
 Jmeter as our main tool, and from day one the biggest challenge was to
-have a full control during load testing.  
+have full control during load testing.  
 As many of you know, Jmeter comes with build in 
 [Thread Group](http://jmeter.apache.org/usermanual/component_reference.html#Thread_Group)
 component. It works absolutely fine, but it's not very useful in real
@@ -54,18 +55,16 @@ plugin, which is great, but it was still not enough.
 
 <img class="column1 right" src="/images/blog/jmeter-and-beanshell-mixer.jpg" />
 
-During load testing we need to be able to change load on different
-components of the system. It is almost like we need a big mixing 
-console with uncountable number of knobs for adjusting all aspects of
-load test we are running.
-
-Imagine a 4 hour long load test, during that time you would probably
+Imagine a 4 hours long load test, during that time you would probably
 like to control how many users try to login to your system, brows your
 website, recover login details etc. In many cases your company is 
-running more then one site, which makes it even more fun. On top of
-that you have your DevOps and PlatformOps engineers screaming from
+running more then just one site, which makes it even more fun. On top
+of that you have your DevOps and PlatformOps engineers screaming from
 time to time that DB Servers|Web Servers|Cache Servers|Backend BlackBox
-is about to explode and you have to adjust the load immediately.
+is about to explode and you have to adjust the load immediately. It is
+almost like you need a big mixing console with uncountable number of
+knobs for adjusting all aspects of load test you are running.  
+... but all you really need is a BeanShell Server ;)
 
 
 
