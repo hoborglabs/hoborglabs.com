@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<page name="page" id="1" parent-id="0">
+	<data>
+		<name><![CDATA[]]>
+		</name>
+	</data>
+	<component file="includes/google-analytics.page" id="2" parent-id="1"/>
+	<component name="header" id="3" parent-id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/en">Home</link>
+					<link href="/en/cms">Hoborg CMS</link>
+					<link href="/en/blog">Blog</link>
+					<link href="/en/projects" active="active">Projects</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="4" parent-id="1">
+		<data/>
+		<component name="content" id="5" parent-id="4">
+			<data>
+				<type><![CDATA[primaryContent]]></type>
+			</data>
+			<component id="6" name="column" parent-id="5"><data><size><![CDATA[columns3]]></size></data><component id="7" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Hoborg Labs <b>Projects</b></h3><p>This is the list of Open Source projects branded with HoborgLabs.</p><h3>Display Service.</h3>
+<p>Display Service is a small &amp; simple Symfony2 bundle for generating pages from XML data files using XSLT templates.</p><p>It is simple solution for your blog or homepage. You can generate files on-the-fly on your dev machine, and generate static HTML files for your production server.</p>]]></text></data></component><component id="8" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Dashboard.</h3>
+<p>It's all about widgets&nbsp;collecting&nbsp;data from all your systems. It's an&nbsp;aggregation&nbsp;tool. In most cases it's used with tools like splunk or&nbsp;graphite.</p>]]></text></data></component><component id="9" name="image" parent-id="6"><data><src><![CDATA[/images/projects-dashboard.png]]></src><alt><![CDATA[Dashboard]]></alt><align><![CDATA[center]]></align><size><![CDATA[columns2]]></size></data></component><component id="10" name="paragraph" parent-id="6"><data><text><![CDATA[<p>Dashboard is easy to setup, and allows you to plug in to your graphite.</p>]]></text></data></component><component id="11" name="paragraph" parent-id="6"><data><text><![CDATA[<h3>Concept hub</h3>
+<p>Concept hub is a tiny side project. It should help you share your designs with your clients. It allows you to zoom in/out and drag images.</p><p><a href="http://concepthub.hoborglabs.com/hub/?project=demo" title="Link: http://concepthub.hoborglabs.com/hub/?project=demo">http://concepthub.hoborglabs.com/hub/?project=demo</a><br></p>]]></text></data></component></component>
+		</component>
+		<component name="content" id="12" parent-id="4">
+			<data>
+				<type><![CDATA[secondaryContent]]></type>
+			</data>
+			<component name="column" id="13" parent-id="12">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+				<component name="paragraph" id="14" parent-id="13">
+					<data>
+						<text><![CDATA[<h4><strong>Hoborg CMS</strong> Architecture</h4>]]></text>
+					</data>
+				</component>
+			</component>
+			<component name="column" id="15" parent-id="12">
+				<data>
+					<size><![CDATA[column1]]></size>
+				</data>
+				<component name="paragraph" id="16" parent-id="15">
+					<data>
+						<text><![CDATA[<ul>
+<li>Version control</li>
+<li>Component based</li>
+<li>Full preview</li>
+<li>Continious content deployment</li>
+</ul>]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+	</component>
+	<component file="includes/en/footer.page" id="17" parent-id="1"/>
+</page>

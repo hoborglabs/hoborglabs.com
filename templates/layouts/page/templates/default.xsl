@@ -21,7 +21,7 @@
 		<html>
 			<head>
 				<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-				<title>Hoborg Labs</title>
+				<title><xsl:value-of select="data/name" /> - Hoborg Labs</title>
 				<meta name="keywords" content="" />
 				<meta name="description" content="" />
 

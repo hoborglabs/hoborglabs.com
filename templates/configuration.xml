@@ -23,6 +23,7 @@
 
 	<!-- MODULES -->
 	<component name="google-analytics" folder="components/modules/google/analytics" />
+	<component name="facebook-comments" folder="components/modules/facebook/comments" />
 	
     <component name="image"        template="components/modules/image/templates/default.xsl" folder="components/modules/image" />
     <component name="paragraph"    template="components/modules/paragraph/templates/default.xsl" folder="components/modules/paragraph" />
