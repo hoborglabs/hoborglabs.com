@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<page name="page">
+    <data>
+        <name><![CDATA[Jmeter Test Plan Fragmentation]]></name>
+    </data>
+    <component file="includes/google-analytics.page" id="16" />
+    <component name="header" id="1">
+        <data>
+            <titlePrimary><![CDATA[hoborg]]></titlePrimary>
+            <titleSecondary><![CDATA[labs.com]]></titleSecondary>
+            <subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+            <menuLang><![CDATA[en]]></menuLang>
+            <menu>
+                <en>
+                    <link href="/en">Home</link>
+                    <link href="/en/cms">Hoborg CMS</link>
+                    <link href="/en/blog" active="active">Blog</link>
+                    <link href="http://projects.hoborglabs.com/">Projects</link>
+                </en>
+            </menu>
+        </data>
+    </component>
+    <component name="main" id="2">
+        <component name="content" id="3" parent-id="2">
+            <data>
+                <type><![CDATA[primaryContent]]></type>
+            </data>
+
+            <component name="column" id="4" parent-id="3">
+                <data>
+                    <size><![CDATA[columns3]]></size>
+                </data>
+                <component name="paragraph" id="5" parent-id="4">
+                    <data>
+                        <markdown><![CDATA[
+### Jmeter Test Plan Fragmentation
+
+**First**, split you test plans by functional components. For instance
+have one jmx for login-logout flow, another one for website
+browsing, registration process, ... you get the idea. Check out
+[Test Fragment](http://jmeter.apache.org/usermanual/component_reference.html#Test_Fragment)
+and [Include Controller](http://jmeter.apache.org/usermanual/component_reference.html#Include_Controller)
+Components. Put one Test Fragment in your frag jmx file, and include it
+from your main test plan using Include Controller. Make sure your 
+`user.dir` is set correctly on remote servers. It will be use to 
+determine full path of your jmx file.
+
+**Next**, design your test profile using your fragments. Busy weekend
+can be all about login-logout and website browsing, where a test before
+massive marketing campaign will concentrate on registration process.
+
+...
+
+
+Now the trick is in [Gaussian Random Timer](http://jmeter.apache.org/usermanual/component_reference.html#Gaussian_Random_Timer)
+and all kind of [Logic Controllers](http://jmeter.apache.org/usermanual/component_reference.html#logic_controllers).
+In your main test plan, simply include test fragments and add some
+Gaussina Random Timers. That will allow you to slow down whole frag.
+
+"*And so what?*" you might ask! But the trick is in the values you put in
+your Timers. Instead of adding boring integers, lets put an user
+property with some reasonable default values.
+
+That is how it can look:
+~~~~~
+Deviation (in milliseconds): ${__P(login.rsleep,1000)}
+Constant Delay Offset (in milliseconds): ${__P(login.sleep,2000)}
+~~~~~
+
+<!-- 
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Weekend</th>
+      <th>Marketing Campaign</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Login, Logout</th>
+      <td>10</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>Website Browse</th>
+      <td>30</td>
+      <td>10</td>
+    </tr>
+  </tbody>
+</table>
+-->
+
+<img class="column1 left" src="/images/blog/jmeter-and-beanshell-plan.png" />
+
+If you are using endless loops in your farg, include your Gaussian
+Timer inside that loop. Read more about how Jmeter applies Timers.
+                        ]]></markdown>
+                    </data>
+                </component>
+            </component>
+        </component>
+        <component name="content" id="9" parent-id="2">
+            <data>
+                <type><![CDATA[secondaryContent]]></type>
+            </data>
+
+            <component name="column" id="10" parent-id="9">
+                <data>
+                    <size><![CDATA[columns2]]></size>
+                </data>
+
+                <component file="includes/en/blog/posts.page" id="16" />
+
+                <component name="paragraph" id="11" parent-id="10">
+                    <data>
+                        <text><![CDATA[
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life's passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        ]]></text>
+                    </data>
+                </component>
+            </component>
+        </component>
+    </component>
+    <component file="includes/en/footer.page" id="15" />
+</page>
