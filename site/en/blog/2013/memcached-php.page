@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<page name="page">
+	<data>
+		<name><![CDATA[Memcached is a Weird Monster]]></name>
+	</data>
+
+	<component name="header" id="1">
+		<data>
+			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
+			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
+			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+			<menuLang><![CDATA[en]]></menuLang>
+			<menu>
+				<en>
+					<link href="/en">Home</link>
+					<link href="/en/cms">Hoborg CMS</link>
+					<link href="/en/blog" active="active">Blog</link>
+				</en>
+			</menu>
+		</data>
+	</component>
+	<component name="main" id="2">
+		<component name="content" id="3" parent-id="2">
+			<data>
+				<type><![CDATA[primaryContent]]></type>
+			</data>
+
+			<component name="column" id="4" parent-id="3">
+				<data>
+					<size><![CDATA[columns3]]></size>
+				</data>
+				<component name="paragraph" id="5" parent-id="4">
+					<data>
+						<markdown><![CDATA[
+### **Memcached** is a Weird Creature.
+
+... or maybe it's just the way you use it?  
+We are using memcached as our shared cache for web tier. And for some
+time it was good. And by good I mean we didn't have problems despite
+of the not-so-good way we have used it.
+
+After several failed attempts of tweaking options and *manually*
+managing list of memcahced servers, I've decided to dive into C code of
+PECL memcached extension and libmemcached. And now I want to share what
+I've learn about libmemcached and memcached extension.
+
+
+
+#### What is Our **Desired Behaviour**?
+
+Depending on what do you use memcached for, you might need a different
+set of features.  
+In our case the ideal solution should support (a) memcached failover
+with (b) the minimum impact on missed hits. It should also (c) 
+automatically readd server when it's available again (and again with
+minimum impact on missed hits).  
+Additionaly we also need (d) persistent connections.
+
+Sounds really basic, but it caused me a few headaches!
+
+
+
+#### Persistent Connections.
+
+Persistent connection are good! But sometimes things can go really,
+really bad if you missconfigure something in your web tier. But this
+post is not about that, so just make sure that your number of apache
+workers is sane.
+
+The one thing you might want to know is that persistent memcached
+connection is not different from non-persistent from libmemcached point
+of view. Persistent memcached object is simply saved in PHP memmory
+between requests using provided id.
+
+~~~~~
+$cache = new Memcached('my-persistent-id');
+~~~~~
+
+In other words libmemcached does not manage persistent connections,
+it's PHP!
+
+That has one simple implication. You only need to configure your 
+connection once when it's created. That includes setting options.
+~~~~~
+$cache = new Memcached('persistant-id');
+
+// only add servers and set options when you get new persistent
+// memcached instance, otherwise it is all set up.
+if ( 0 == count($cache->getServerList()) ) {
+  $cache->addServers( $servers );
+  $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+}
+~~~~~
+If your thoughts right now was similar to "Bulshit, I have to set
+options on each request, otherwise it doesn't work!" just keep calm and
+continue reading.
+
+
+
+#### Consistent Hashing.
+
+Everybody knows what consistent distribution is all about. But I (and
+maybe you too) made some false assumptions about it.  
+I've assumed that memcached driver will take care of dead servers and
+will start putting keys from dead server accross existing ones - oh boy
+I was wrong :)
+What consistent distribution means is that given keys will be stored on
+given servers *no metter what*. The distribution will change when you
+ask driver to recalculate it, by setting distribution method again.
+And that updates hashing function and dead server(s) are no longer
+used.
+
+This is simple example
+~~~~~
+$cache = new Memcached('persistant-id');
+
+// only add servers and set options when you get new persistent
+// memcached instance, otherwise it is all set up.
+if (count($cache->getServerList()) == 0) {
+  $cache->addServers($servers);
+  $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+}
+
+for ($i = 0; $ < 10; $i++) {
+	$val = $cache->get("my-key-{$i}");
+	$code = $cache->getResponseCode();
+
+	// check for errors
+	if (in_array($code, array(3, 36, 47)) {
+		// server dead, force recalculation of distribution
+		$cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+
+		// handle error
+		echo "error code: {$code}";
+	}
+
+	// save data if not present
+	if (!$val) {
+		$cache->set("my-key-{$i}", md5(rand(0, 100)));
+	}
+}
+~~~~~
+
+The **most important part** here is that `$cache->set` is fired after
+setting OPT_LIBKETAMA_COMPATIBLE again after detecting error. That
+triggers recalculation of consistent distribution continuum, and the
+`set` method will not try to use any dead servers.
+
+
+
+#### Failover and Auto Recovery
+
+Now, we got persistent connections and as soon as fatal error will 
+accure we will stop using it and redistribute keys to other servers.  
+Now we want make sure that we will star using bad servers the minute
+it's back on line.
+
+~~~~~
+if (count($cache->getServerList()) == 0) {
+  $cache->addServers($servers);
+  $cache->setOption( Memcached::OPT_REMOVE_FAILED_SERVERS, 100 );
+  $cache->setOption( Memcached::OPT_RETRY_TIMEOUT,         5 );
+  $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE,  true );
+}
+~~~~~
+
+Remember that memcached object is saved in PHP memmory between
+requests. You have to set "remove failed servers" and "retry timeout"
+based on your average apache worker life time.
+
+
+
+#### Other Facts, tipas & tricks
+
+Setting `OPT_REMOVE_FAILED_SERVERS` will automaticlly set
+`OPT_SERVER_FAILURE_LIMIT` and `OPT_AUTO_EJECT_HOSTS` which exaplins a
+little bit why `OPT_AUTO_EJECT_HOSTS` is deprecated in libmemcached
+docs ;)
+
+`OPT_RETRY_TIMEOUT` is by default set to 2 seconds, not 0.
+
+Turning off `OPT_LIBKETAMA_COMPATIBLE` will set distribution to 
+`DISTRIBUTION_MODULA` (!)
+
+Only following distribution takes into account ejected servers.
+`CONSISTENT`, `CONSISTENT_KETAMA`, `CONSISTENT_KETAMA_SPY` or 
+`CONSISTENT_WEIGHTED` (5),  
+Enabling `OPT_LIBKETAMA_COMPATIBLE` which will set distribution to
+`CONSISTENT_WEIGHTED`.
+
+When using consistent distribution DO NOT manipulate with number of
+servers manually in your php code - let the driver do the work!
+
+						]]></markdown>
+					</data>
+				</component>
+				<component name="facebook-comments" >
+					<data>
+						<text><![CDATA[
+<h3>Comments</h3>
+						]]></text>
+						<url>http://hoborglabs.com/<?php echo $this->getUrl(); ?></url>
+					</data>
+				</component>
+			</component>
+		</component>
+		<component name="content" id="9" parent-id="2">
+			<data>
+				<type><![CDATA[secondaryContent]]></type>
+			</data>
+
+			<component name="column" id="10" parent-id="9">
+				<data>
+					<size><![CDATA[columns2]]></size>
+				</data>
+
+				<component file="includes/en/blog/posts.page" id="16" />
+
+				<component name="paragraph" id="11" parent-id="10">
+					<data>
+						<text><![CDATA[
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life's passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+						]]></text>
+					</data>
+				</component>
+			</component>
+		</component>
+	</component>
+	<component file="includes/en/footer.page" id="15" />
+	<component file="includes/google-analytics.page" id="16" />
+</page>
