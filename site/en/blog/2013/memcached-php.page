@@ -35,14 +35,17 @@
 ### **Memcached** is a Weird Creature.
 
 ... or maybe it's just the way you use it?  
-We are using memcached as our shared cache for web tier. And for some
-time it was good. And by good I mean we didn't have problems despite
-of the not-so-good way we have used it.
+We are using memcached as our shared cache for PHP powered web tier.
+And for some time it was good. And by good I mean we didn't have
+any major problems despite the not-so-good way we have been using it.
 
-After several failed attempts of tweaking options and *manually*
-managing list of memcahced servers, I've decided to dive into C code of
-PECL memcached extension and libmemcached. And now I want to share what
-I've learn about libmemcached and memcached extension.
+After several failed attempts of tweaking all kinds of Memcached
+options and even trying to *manually* manage list of memcached servers
+in PHP, I've decided to dive into C code of PECL memcached extension
+and libmemcached. Now I want to share what I've learn about
+libmemcached and memcached extension.
+
+**If you just want the code - [click here](#the-code)**
 
 
 
@@ -52,9 +55,9 @@ Depending on what do you use memcached for, you might need a different
 set of features.  
 In our case the ideal solution should support (a) memcached failover
 with (b) the minimum impact on missed hits. It should also (c) 
-automatically readd server when it's available again (and again with
+automatically re-add server when it's available again (and again with
 minimum impact on missed hits).  
-Additionaly we also need (d) persistent connections.
+Additionally we also need (d) persistent connections.
 
 Sounds really basic, but it caused me a few headaches!
 
@@ -69,18 +72,16 @@ workers is sane.
 
 The one thing you might want to know is that persistent memcached
 connection is not different from non-persistent from libmemcached point
-of view. Persistent memcached object is simply saved in PHP memmory
-between requests using provided id.
-
-~~~~~
-$cache = new Memcached('my-persistent-id');
-~~~~~
+of view. When using persistent connection, memcached object is simply
+saved in PHP memory between requests using provided id.
 
 In other words libmemcached does not manage persistent connections,
 it's PHP!
 
 That has one simple implication. You only need to configure your 
-connection once when it's created. That includes setting options.
+connection once when it's created. That includes setting all kind of
+options.
+
 ~~~~~
 $cache = new Memcached('persistant-id');
 
@@ -91,9 +92,10 @@ if ( 0 == count($cache->getServerList()) ) {
   $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
 }
 ~~~~~
-If your thoughts right now was similar to "Bulshit, I have to set
-options on each request, otherwise it doesn't work!" just keep calm and
-continue reading.
+
+If you are thinging right now: "Bollocks! I have to set options on each
+request, otherwise it doesn't work!" just keep calm and continue
+reading.
 
 
 
@@ -102,15 +104,17 @@ continue reading.
 Everybody knows what consistent distribution is all about. But I (and
 maybe you too) made some false assumptions about it.  
 I've assumed that memcached driver will take care of dead servers and
-will start putting keys from dead server accross existing ones - oh boy
-I was wrong :)
+will start reassigning keys from dead server across existing ones - oh
+boy, I was wrong :)
 What consistent distribution means is that given keys will be stored on
-given servers *no metter what*. The distribution will change when you
-ask driver to recalculate it, by setting distribution method again.
-And that updates hashing function and dead server(s) are no longer
-used.
+given servers **no matter what**. The distribution will change when you
+ask driver to recalculate it, by setting distribution method again,
+which updates hashing function and dead server(s) are no longer used.
 
-This is simple example
+It's hard to tell if that's a bug or desired behaviour of libmemcahced
+(up to 1.0.16). You can [read more here](https://code.google.com/p/memcached/wiki/NewConfiguringClient).
+
+This simple example will update hashing continuum on fatal errors.
 ~~~~~
 $cache = new Memcached('persistant-id');
 
@@ -123,10 +127,10 @@ if (count($cache->getServerList()) == 0) {
 
 for ($i = 0; $ < 10; $i++) {
 	$val = $cache->get("my-key-{$i}");
-	$code = $cache->getResponseCode();
+	$code = $cache->getResultCode();
 
 	// check for errors
-	if (in_array($code, array(3, 36, 47)) {
+	if (in_array($code, array(26, 31, 2, 11, 35, 3, 47)) {
 		// server dead, force recalculation of distribution
 		$cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
 
@@ -152,21 +156,25 @@ triggers recalculation of consistent distribution continuum, and the
 
 Now, we got persistent connections and as soon as fatal error will 
 accure we will stop using it and redistribute keys to other servers.  
-Now we want make sure that we will star using bad servers the minute
+Now we want make sure that we will star using bad servers the second
 it's back on line.
 
 ~~~~~
 if (count($cache->getServerList()) == 0) {
   $cache->addServers($servers);
   $cache->setOption( Memcached::OPT_REMOVE_FAILED_SERVERS, 100 );
-  $cache->setOption( Memcached::OPT_RETRY_TIMEOUT,         5 );
+  $cache->setOption( Memcached::OPT_RETRY_TIMEOUT,		 5 );
   $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE,  true );
 }
 ~~~~~
 
 Remember that memcached object is saved in PHP memmory between
-requests. You have to set "remove failed servers" and "retry timeout"
-based on your average apache worker life time.
+requests. Which means that libmemcached will stop trying to reconnect
+after reaching failure limit. You have to make sure that your apache
+worker is beeing recycled, and that limit is fine with your platform
+ops.
+
+You can be more clever and double retry timeout on each failure.
 
 
 
@@ -191,13 +199,84 @@ Enabling `OPT_LIBKETAMA_COMPATIBLE` which will set distribution to
 When using consistent distribution DO NOT manipulate with number of
 servers manually in your php code - let the driver do the work!
 
+
+
+#### The Code {#the-code}
+
+This is fully working example code.  
+Try running it like that while turning on and off your memcached servers.
+~~~~~
+bash -c "while true; do curl -s http://wo.local/public/memcached.php; sleep 0.5; done;" | awk '{ if ($1 == "OK") { ok = ok + 1 } else { err = err + 1 } if ($2 == "127.0.0.1") { s1 = s1 + 1 } else { s2 = s2 +1 } print "OK: " ok ", ERR: " err ", SERVERS HIT COUNT [" s1 ", " s2 "]";}'
+~~~~~
+
+I've made one shortcut and I'm checking reponse code after calling both
+`get` and `set`. In your production code do check result code after
+each Memcached call.
+~~~~~
+$cache = new Memcached('persistant-id');
+$servers = array(
+	array('127.0.0.1', 11211),
+	array('127.0.0.2', 11212),
+);
+$fatalCodes = array(
+	Memcached::RES_ERRNO,
+	Memcached::RES_TIMEOUT,
+	Memcached::RES_HOST_LOOKUP_FAILURE,
+	Memcached::RES_CONNECTION_SOCKET_CREATE_FAILURE,
+	Memcached::RES_SERVER_MARKED_DEAD,
+	3, // MEMCACHED_CONNECTION_FAILURE
+	47, // MEMCACHED_SERVER_TEMPORARILY_DISABLED
+);
+
+// only add servers and set options when you get new persistent
+// memcached instance, otherwise it is all set up.
+if (0 == count($cache->getServerList())) {
+	$cache->addServers($servers);
+	$cache->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE,  true);
+	$cache->setOption(Memcached::OPT_REMOVE_FAILED_SERVERS, 12);
+	$cache->setOption(Memcached::OPT_RETRY_TIMEOUT,		 1);
+
+	$cache->setOption(Memcached::OPT_CONNECT_TIMEOUT, 100); // miliseconds
+	$cache->setOption(Memcached::OPT_NO_BLOCK, 1);
+	$cache->setOption(Memcached::OPT_POLL_TIMEOUT, 100);	// miliseconds
+	$cache->setOption(Memcached::OPT_SEND_TIMEOUT, 100000); // microseconds
+	$cache->setOption(Memcached::OPT_RECV_TIMEOUT, 100000); // microseconds
+}
+
+for ($i = 0; $i < 40; $i++) {
+	$key = "my-key-{$i}";
+	$val = $cache->get($key);
+
+	// save data if not present
+	if (!$val) {
+		$cache->set($key, md5(rand(0, 100)));
+	}
+
+	$code = $cache->getResultCode();
+	$server = $cache->getServerByKey($key);
+	$host = $server['host'];
+
+	// check for errors
+	if (in_array($code, $fatalCodes)) {
+		// server dead, force recalculation of distribution
+		$cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+
+		// handle error
+		// ...
+		echo "ERR {$host}\n";
+	} else {
+		echo "OK {$host}\n";
+	}
+}
+~~~~~
+
 						]]></markdown>
 					</data>
 				</component>
 				<component name="facebook-comments" >
 					<data>
 						<text><![CDATA[
-<h3>Comments</h3>
+				<h3>Comments</h3>
 						]]></text>
 						<url>http://hoborglabs.com/<?php echo $this->getUrl(); ?></url>
 					</data>
