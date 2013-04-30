@@ -278,7 +278,7 @@ for ($i = 0; $i < 40; $i++) {
 						<text><![CDATA[
 				<h3>Comments</h3>
 						]]></text>
-						<url>http://hoborglabs.com/<?php echo $this->getUrl(); ?></url>
+						<url>http://hoborglabs.com/</url>
 					</data>
 				</component>
 			</component>

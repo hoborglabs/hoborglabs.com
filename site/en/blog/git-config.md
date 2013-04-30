@@ -106,13 +106,9 @@ Here's my whole config file
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     ls = ls-files
 
-    #ticket stuff
-    tkt-checkout = "!f() { git checkout tkt-$1 ; }; f"
-    tkt-merge = "!f() { git merge --no-ff --no-commit remotes/origin/tkt-$1 ; }; f"
-    tkt-merge-cancel = reset --hard
-    tkt-merge-undo = reset --hard ORIG_HEAD
-    tkt-branch = "!f() { git branch -a | grep --colour=never 'tkt-' ; }; f"
-    tkt-create = "!f() { git push origin $1:refs/heads/tkt-$2 ; git fetch origin ; git checkout --track -b tkt-$2 origin/tkt-$2 ; }; f"
+    branch-create = "!f() { git push origin $1:refs/heads/$2 ; git fetch origin ; git checkout --track -b $2 origin/$2 ; }; f"
+    merge-cancel = reset --hard
+    merge-undo = reset --hard ORIG_HEAD
 
 [difftool]
     prompt = false
