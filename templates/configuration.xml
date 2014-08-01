@@ -1,36 +1,34 @@
 <templates>
 
 	<external src="./../vendors/hoborglabs/components" />
-	
+
 	<!-- LAYOUTS -->
-	<page name="page"              template="layouts/page/templates/default.xsl" folder="layouts/page" />
-	<component name="page"         template="layouts/page/templates/default.xsl" folder="layouts/page" />
-	<page name="include"              template="layouts/include/templates/default.xsl" folder="layouts/include" />
-    <component name="include"         template="layouts/include/templates/default.xsl" folder="layouts/include" />
+	<component name="page" folder="layouts/page" />
+	<component name="include" folder="layouts/include" />
 
 	<!-- GRID -->
-	<component name="header"       template="components/grid/header/templates/default.xsl" folder="components/grid/header" />
-	<component name="footer"       template="components/grid/footer/templates/default.xsl" folder="components/grid/footer" />
-	<component name="content"      template="components/grid/content/templates/default.xsl" folder="components/grid/content" />
-	<component name="column"       template="components/grid/column/templates/default.xsl" folder="components/grid/column" />
-	<component name="main"         template="components/grid/main/templates/default.xsl" folder="components/grid/main" />
+	<component name="header" folder="components/grid/header" />
+	<component name="footer" folder="components/grid/footer" />
+	<component name="content" folder="components/grid/content" />
+	<component name="column" folder="components/grid/column" />
+	<component name="main" folder="components/grid/main" />
 
 	<!-- NAVIGATION -->
-	<component name="menu"         template="components/navigation/menu.xsl" folder="components/navigation/menu" />
+	<component name="menu" folder="components/navigation/menu" />
 
 	<!-- Content -->
-	<component name="article"      template="components/content/article.xsl" folder="components/content/article" />
+	<component name="article" folder="components/content/article" />
 
 	<!-- MODULES -->
 	<component name="google-analytics" folder="components/modules/google/analytics" />
 	<component name="facebook-comments" folder="components/modules/facebook/comments" />
-	
-    <component name="image"        template="components/modules/image/templates/default.xsl" folder="components/modules/image" />
-    <component name="paragraph"    template="components/modules/paragraph/templates/default.xsl" folder="components/modules/paragraph" />
-    <component name="jenkins"      template="components/modules/jenkins/templates/default.xsl" folder="components/modules/jenkins" />
-    
-    <component name="h-widget-time"     template="components/h-dashboard/time/templates/default.xsl" folder="components/h-dashboard/time" />
-    <component name="h-widget-jenkins"  template="components/h-dashboard/jenkins/templates/default.xsl" folder="components/h-dashboard/jenkins" />
-    <component name="h-widget-redmine"  template="components/h-dashboard/redmine/templates/default.xsl" folder="components/h-dashboard/redmine" />
-    
+
+    <component name="image" folder="components/modules/image" />
+    <component name="paragraph" folder="components/modules/paragraph" />
+    <component name="jenkins" folder="components/modules/jenkins" />
+
+    <component name="h-widget-time" folder="components/h-dashboard/time" />
+    <component name="h-widget-jenkins" folder="components/h-dashboard/jenkins" />
+    <component name="h-widget-redmine" folder="components/h-dashboard/redmine" />
+
 </templates>

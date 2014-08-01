@@ -5,3 +5,5 @@
 
 imports:
   - { resource: ./../config.yml }
+  - { resource: ./../parameters.ini }
+  - { resource: ./parameters.ini }
