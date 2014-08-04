@@ -1,0 +1,31 @@
+/* Menu */
+#menu {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+}
+
+/* Menu */
+#menu ul {
+	list-style: none;
+}
+#menu li {
+	float: left;
+}
+#menu li a {
+	margin-left: 0.5em;
+	display: block;
+	padding: 1.1em 1.4em 1.0em 1.4em;
+	background: #fff url('../gfx/main-li-bg.gif') repeat-x;
+	border: solid 1px #fff;
+	color: #616161;
+	font-weight: bold;
+	font-size: 1.0em;
+	text-transform: lowercase;
+	text-decoration: none;
+}
+#menu li.active a {
+	background: #FF790B url('../gfx/main-li-active-bg.gif') repeat-x;
+	color: #fff;
+	border: solid 1px #DB7623;
+}

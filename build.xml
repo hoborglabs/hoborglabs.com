@@ -6,11 +6,20 @@
 
 	<!-- set default values if not already set in build.properties -->
 	<property name="dir.base" location="." />
-	<property name="dir.out" value="${dir.base}/out" />
+	<property name="dir.out" value="${dir.base}/public" />
 
 	<!-- Commands defaults -->
 	<property name="cmd.php" value="php" />
 	<property name="cmd.sass" value="sass" />
+
+
+
+	<target name="build">
+		<parallel>
+			<antcall target="build.html" />
+			<antcall target="build.css" />
+		</parallel>
+	</target>
 
 	<target name="build.html">
 		<!-- If ds.env is not set, use "prod" -->
@@ -25,7 +34,7 @@
 		<mkdir dir="${dir.out}/pl/blog" />
 
 		<echo level="info">Generating HTML to `${dir.out}`</echo>
-		<exec executable="${cmd.php}" failonerror="true">
+		<exec executable="${cmd.php}" failonerror="true" outputproperty="devnull">
 			<env key="DS_HOSTDIR" value="${dir.base}" />
 			<env key="DS_ENV" value="${ds.env}" />
 			<arg line="displayService.phar" />
@@ -43,7 +52,7 @@
 	<target name="build.css">
 		<mkdir dir="${dir.out}/static/styles/css" />
 
-		<echo level="info">Building ${dir.out}/static/styles/css/main.css</echo>
+		<echo level="info">Generating CSS to ${dir.out}/static/styles/css/main.css</echo>
 		<exec executable="${cmd.sass}">
 			<arg line="--style compressed" />
 			<arg line="${dir.base}/styles/sass/main.scss" />

@@ -3,17 +3,18 @@
 /.project
 
 
-# Configuration 
+# Configuration
 /application/*/conf/*.ini
 !/application/*/conf/*.default.ini
 /application/*/conf/*/*.ini
 !/application/*/conf/*/*.default.ini
 
-## 
-# vendors
+##
+# build
 /vendors/dashboard/*
 !/vendors/dashboard/install.sh
-
 /build.properties
-/build
 /logs
+.sass-cache
+/public/*.html
+/public/**/*.html

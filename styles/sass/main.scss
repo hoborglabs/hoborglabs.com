@@ -1,0 +1,13 @@
+
+@import "reset";
+
+.fullWidth {
+	width: 950px;
+}
+
+@import "components/grid";
+@import "components/header";
+@import "components/menu";
+@import "components/footer";
+
+@import "skin";

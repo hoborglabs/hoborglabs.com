@@ -1,0 +1,67 @@
+
+/**
+* Footer
+*/
+#footer {
+	clear: both;
+}
+
+#footer-inner {
+	margin: 0px auto;
+}
+	.footer-about,
+	.footer-other {
+		margin-bottom: 40px;
+	}
+
+	.footer-about {
+		width: 380px;
+		float: left;
+	}
+	.footer-other {
+		margin-left: 570px;
+		width: 380px;
+	}
+
+
+/**
+* Footer
+*/
+#footer {
+	color: #999999;
+}
+
+#footer ul {
+	margin: 0px 0px 12px 12px;
+}
+
+.footer-about {
+	background: transparent url('../gfx/notch.gif') 30px 0px no-repeat;
+	padding-top: 30px;
+}
+
+.footer-other {
+	padding: 30px 6px 0px 0px;
+}
+
+#footer h4 {
+	color: #FFFFFF;
+	font-size: 24px;
+	margin: 20px 0px 10px 0px;
+}
+#footer h4 strong,
+#footer h4 b {
+	font-size: 30px;
+}
+
+#footer h5 {
+	margin: 20px 0px 10px 0px;
+	padding: 0px 0px 4px 0px;
+	color: #FFFFFF;
+	font-size: 18px;
+	border-bottom: 1px #FFFFFF dashed;
+}
+#footer h5 strong,
+#footer h5 b {
+	font-size: 24px;
+}

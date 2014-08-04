@@ -1,0 +1,46 @@
+
+/**
+* MAIN
+*/
+#main_inner {
+	position: relative;
+	margin: 0 auto;
+	padding-top: 2.5em;
+}
+
+/** Layout */
+div.column1 {
+	float: left;
+	width: 190px;
+}
+div.columns2 {
+	float: left;
+	width: 380px;
+}
+div.columns3 {
+	float: left;
+	width: 570px;
+}
+div.columns4 {
+	float: left;
+	width: 760px;
+}
+div.columns5 {
+	float: left;
+	width: 950px;
+}
+
+#primaryContent {
+	margin: 0px;
+}
+#secondaryContent {
+	margin: 0px 0px 0px 580px;
+	width: 380px;
+}
+
+#primaryContent div.content {
+	margin-right: 2.0em;
+}
+#secondaryContent div.content {
+	margin-left: 1.4em;
+}
