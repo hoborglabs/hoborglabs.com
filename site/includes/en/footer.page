@@ -3,10 +3,10 @@
     <component name="footer" id="12">
         <data>
             <about><![CDATA[<h4>What's <strong>inside</strong>?</h4>
-<img alt="Zend Framework" title="Zend Framework" src="http://hoborglabs.com/images/footer-zend-framework.png" class="logo" />
-<img alt="SVN" title="SVN"  src="http://hoborglabs.com/images/footer-svn.png" class="logo" />
-<img alt="PHP" title="PHP"  src="http://hoborglabs.com/images/footer-php.png" class="logo" />
-<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="http://hoborglabs.com/images/footer-jquery.png" class="logo" />
+<img alt="Zend Framework" title="Zend Framework" src="/images/footer-zend-framework.png" class="logo" />
+<img alt="SVN" title="SVN"  src="/images/footer-svn.png" class="logo" />
+<img alt="PHP" title="PHP"  src="/images/footer-php.png" class="logo" />
+<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="/images/footer-jquery.png" class="logo" />
 
 <h4><strong>Get</strong> In Touch</h4>
 <p>If you intrested in testing Hoborg CMS, drop me an email at <strong>wojtek@hoborglabs.com</strong></p>]]></about>

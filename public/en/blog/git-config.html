@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:php="http://php.net/xsl">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Home - Hoborg Labs</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" media="all" href="/static/styles/css/main.css">
+</head>
+<body><div xmlns:php="http://php.net/xsl" id="header">
+<div class="flags">
+<a href="/pl" class="flag pl">PL</a>, <a href="/en" class="flag gb">EN</a>
+</div>
+<div id="headerInner" class="fullWidth">
+<img class="logo" src="/images/logo.png"><div id="logo">
+<h1>
+<span>hoborg</span>labs.com</h1>
+<h2>by Wojtek Oledzki</h2>
+</div>
+<div id="menu"><ul>
+<li class="first "><a href="/en">Home</a></li>
+<li class=""><a href="/en/cms">Hoborg CMS</a></li>
+<li class="active"><a href="/en/blog">Blog</a></li>
+<li class="last "><a href="http://projects.hoborglabs.com/">Projects</a></li>
+</ul></div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="main" class="primaryContent"><div id="main_inner" class="fullWidth"><div xmlns:php="http://php.net/xsl" id="primaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns3"><div xmlns:php="http://php.net/xsl" class="content"><h3>Configure your <strong>GIT</strong></h3>
+
+<p>I think there is no point in advertising GiT - it&apos;s simply awesome!
+But it&apos;s even more awesome if you configure it to fit your needs.</p>
+
+<p>I like GUI, and I want to use it when I can. I also like to SSH to my
+machines, and then I want to use plain and simple console output.</p>
+
+<h3>Viewing diffs using GUI</h3>
+
+<p>Few month ago I come across a config which allows you to use meld
+for <code>git diff</code>. And for a while it was good ... But one day I wanted
+to make a simple <code>.patch</code> file, which turns out to be real pain without
+disabling my handy meld config.</p>
+
+<p>Now I have new better config which doesn&apos;t use external scripts and it&apos;s
+all pure GIT.</p>
+
+<pre><code>[alias]
+    df = difftool -x meld
+    patch = diff --no-prefix
+
+[difftool]
+    prompt = false
+</code></pre>
+
+<p>And now I can simply use following commands</p>
+
+<pre><code>git df // that will open meld and show current diff
+git patch // to generate patch
+git diff // to use plain and simple console diff when I&apos;m ssh-ing
+</code></pre>
+
+<h3>Colours</h3>
+
+<p>For some reason I didn&apos;t like the default colour scheme. It&apos;s really
+easy to change it to whatever you want.</p>
+
+<pre><code>[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+</code></pre>
+
+<p>Here&apos;s my whole config file</p>
+
+<pre><code>[core]
+    editor = vim
+
+[user]
+    name = Lorme Ipsum
+    email = lorem.ipsum@dolor.com
+
+[push]
+    default = current
+
+[color]
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = difftool -x meld
+    patch = diff --no-prefix
+    lg = log -p
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    ls = ls-files
+
+    branch-create = "!f() { git push origin $1:refs/heads/$2 ; git fetch origin ; git checkout --track -b $2 origin/$2 ; }; f"
+    merge-cancel = reset --hard
+    merge-undo = reset --hard ORIG_HEAD
+
+[difftool]
+    prompt = false
+</code></pre>
+</div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="secondaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns2"><div xmlns:php="http://php.net/xsl" class="content"><h4>Latest <b>blog</b> posts.</h4>
+<ul>
+    <li><a href="/en/blog/2013/memcached-php">[2013-04-17] Memcached is a weird creature.</a></li>
+    <li><a href="/en/blog/jmeter-and-beanshell">[2013-01-28] Jmeter and BeanShell.</a></li>
+    <li><a href="/en/blog/mustache">[2012-11-08] Why you should update mustache.js.</a></li>
+    <li><a href="/en/blog/git-diff-mac">[2012-09-08] Visual `git diff` on MAC.</a></li>
+    <li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>
+    <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
+    <li><a href="/en/blog/git-config">[2012-03-23] Configure your git.</a></li>
+    <li><a href="/en/blog/phpunit_git_bisect">[2012-02-09] Debuging with GIT bisect and phpunit.</a></li>
+    <li><a href="/en/blog/set-up-dashboard">[2012-01-10] How to set-up your Dashboard.</a></li>
+</ul>
+			</div>
+<div xmlns:php="http://php.net/xsl" class="content">
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life&apos;s passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        </div>
+</div>
+</div>
+<br class="clear">
+</div></div>
+<div xmlns:php="http://php.net/xsl" id="footer" class="fixed"><div id="footer-inner" class="fullWidth">
+<div class="footer-about"><h4>What&apos;s <strong>inside</strong>?</h4>
+<img alt="Zend Framework" title="Zend Framework" src="/images/footer-zend-framework.png" class="logo" />
+<img alt="SVN" title="SVN"  src="/images/footer-svn.png" class="logo" />
+<img alt="PHP" title="PHP"  src="/images/footer-php.png" class="logo" />
+<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="/images/footer-jquery.png" class="logo" />
+
+<h4><strong>Get</strong> In Touch</h4>
+<p>If you intrested in testing Hoborg CMS, drop me an email at <strong>wojtek@hoborglabs.com</strong></p></div>
+<div class="footer-other"><h4><strong>Who</strong> is using hoborg CMS?</h4>
+<ul>
+<li>wojtek.it</li>
+<li>bhp-raciborz.pl</li>
+<li>hoborglabs.com</li>
+</ul>
+<p>Copyright &copy; 2010-2011 hoborglabs.com. All rights reserved.</p></div>
+</div></div>
+<script src="/static/scripts/main.js"></script>
+</body>
+</html>

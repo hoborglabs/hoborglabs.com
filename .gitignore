@@ -11,10 +11,10 @@
 
 ##
 # build
+/displayService.phar
 /vendors/dashboard/*
 !/vendors/dashboard/install.sh
 /build.properties
 /logs
 .sass-cache
-/public/*.html
-/public/**/*.html
+/public/includes/*

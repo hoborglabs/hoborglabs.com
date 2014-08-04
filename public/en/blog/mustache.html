@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:php="http://php.net/xsl">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Home - Hoborg Labs</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" media="all" href="/static/styles/css/main.css">
+</head>
+<body><div xmlns:php="http://php.net/xsl" id="header">
+<div class="flags">
+<a href="/pl" class="flag pl">PL</a>, <a href="/en" class="flag gb">EN</a>
+</div>
+<div id="headerInner" class="fullWidth">
+<img class="logo" src="/images/logo.png"><div id="logo">
+<h1>
+<span>hoborg</span>labs.com</h1>
+<h2>by Wojtek Oledzki</h2>
+</div>
+<div id="menu"><ul>
+<li class="first "><a href="/en">Home</a></li>
+<li class=""><a href="/en/cms">Hoborg CMS</a></li>
+<li class="active"><a href="/en/blog">Blog</a></li>
+<li class="last "><a href="http://projects.hoborglabs.com/">Projects</a></li>
+</ul></div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="main" class="primaryContent"><div id="main_inner" class="fullWidth"><div xmlns:php="http://php.net/xsl" id="primaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns3"><div xmlns:php="http://php.net/xsl" class="content"><h3>Why you should <strong>update your Mustache.js</strong></h3>
+
+<p>If your mustache template renders in more then 2-5s on iPad or iPhone
+and you want to bring that number <strong>down to 30ms</strong>, have a quick read :)</p>
+
+<h4>Background</h4>
+
+<p>After profiling one web application I&apos;ve found some worying JS
+performance issues on mobile devices. Some of the big templates ware
+taking more than 4, 5 or even 10 sekonds to render!! To make things
+more fun, only i-devices ware effected.</p>
+
+<p>Short investigation revield that <code>squashTokens</code> is taking 99% of that 
+time. Turned out that array splice is really slow. Here&apos;s the original
+function:</p>
+
+<pre><code>function squashTokens(tokens) {
+  var lastToken;
+
+  for (var i = 0; i < tokens.length; ++i) {
+    var token = tokens[i];
+
+    if (lastToken && lastToken.type === "text" && token.type === "text") {
+      lastToken.value += token.value;
+      tokens.splice(i--, 1); // Remove this token from the array.
+    } else {
+      lastToken = token;
+    }
+  }
+}
+</code></pre>
+
+<p>The fix was simple - instead of manipulating original array, let&apos;s build
+new one! Simple idea, even simpler implementation.</p>
+
+<pre><code>function squashTokens(tokens) {
+  var token, lastToken, squashedTokens = [];
+
+  for (var i = 0; i < tokens.length; ++i) {
+    token = tokens[i];
+
+    if (lastToken && lastToken.type === "text" && token.type === "text") {
+      lastToken.value += token.value;
+    } else {
+      lastToken = token;
+      squashedTokens.push(token);
+    }
+  }
+
+  return squashedTokens; 
+}
+</code></pre>
+
+<h4>Why <strong>V8</strong> was so <strong>Fast</strong></h4>
+
+<p>Why mustache runs so fast on V8?<br />
+<del>I&apos;m not sure if that&apos;s true or not, but apparently <code>splice(index, 1)</code>
+was optimized and runs arround x100 faster then for instance 
+<code>splice(index, 2)</code> - that&apos;s something I need to test :)</del><br />
+It&apos;s simply because V8 is amazing.</p>
+
+<h4>What <strong>Next</strong>?</h4>
+
+<p>I will try to setup browserscope speed tests for mustache.js.</p>
+
+<h4><strong>Testing</strong> The Fix</h4>
+
+<p>I did some testing today (9 Nov 2012) on various mobile devices.
+You can check the test template in the source of this page or just run
+<code>$(&apos;#tpl&apos;).html()</code> in JS console. Data for template is very small and
+simple. And here are some interesting numbers:</p>
+
+<pre><code>| Device           | OS        | avg time v-0.7.0 | avg time v-master |
++------------------+-----------+------------------+-------------------+
+| ipad2            | iOS 5.1.1 | 4142             | 33                |
+| ipad3            | iOS 6.0.0 | 5037             | 34                |
+| iphone 5         | iOS 6.0.1 | 3428             | 20                |
+| iphone 3GS       | iOS 4.3   | 7925             | 128               |
+| experia mini pro | A 2.3.4   | 124              | 95                |
+| samsung GT-l9300 | A 4.1.1   | 57               | 30                |
+| asus TF101       | A 4.0.3   | 44               | 23                |
+</code></pre>
+
+<p>If you want, you can run these tests in <strong>your browser</strong>, simply click bellow
+buttons (links) and check numbers.</p>
+
+<p><a class="btn btn-one">Mustache 0.7.0 Test</a></p>
+
+<table style="margin: -10px 0px 20px 0px;">
+<thead>
+  <tr>
+    <th>total time in ms&nbsp;</th>
+    <th>output length</th>
+  </tr>
+  <tr><td>avg: <span class="avg"></span></td><td></td></tr>
+</thead>
+<tbody class="out-one"></tbody></table>
+
+<p><a class="btn btn-two">Mustache master branch Test</a></p>
+
+<table style="margin: -10px 0px 20px 0px;">
+<thead>
+  <tr>
+    <th>total time in ms&nbsp;</th>
+    <th>output length</th>
+  </tr>
+  <tr><td>avg: <span class="avg"></span></td><td></td></tr>
+</thead>
+<tbody class="out-two"></tbody>
+</table>
+
+<p><a class="btn btn-three">Mustache 0.5.0-dev Test</a></p>
+
+<table style="margin: -10px 0px 20px 0px;">
+<thead>
+  <tr>
+    <th>total time in ms&nbsp;</th>
+    <th>output length</th>
+  </tr>
+  <tr><td>avg: <span class="avg"></span></td><td></td></tr>
+</thead>
+<tbody class="out-three"></tbody>
+</table>
+
+<p>JS function used in test.</p>
+
+<pre><code>function benchmark(m) {
+
+        m.clearCache();
+
+        var tic = new Date().getTime();
+        var r = m.render(tpl, tplData)
+        var toc = new Date().getTime();
+}
+
+</code></pre>
+
+<p><script src="//get.hoborglabs.com/mustache-test/mustache.js"></script>
+<script src="//get.hoborglabs.com/mustache-test/mustache.new.js"></script>
+<script src="//get.hoborglabs.com/mustache-test/mustache.0.5.js"></script></p>
+
+<script type="text/template" id="tpl">
+<div class="this will create a lot of tokens to squash">
+    <p>{{name}}</p>
+    <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+    <ul>
+        <li class="auctor eros ac lacus euismod tristique">Maecenas neque ligula, porttitor vel congue sed, bibendum nec lectus. Donec vitae tortor ipsum, vitae facilisis velit. Praesent vehicula diam non lacus consequat a vestibulum velit mollis. Fusce interdum gravida risus, sed pharetra urna convallis nec. Suspendisse potenti.</li>
+        <li>
+            <div>
+                <p>{{name}}</p>
+                <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                <a href="">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In vehicula ornare facilisis.</a>
+            </div>
+        </li>
+        <li>
+            <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+            <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+            <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+        </li>
+    </ul>
+    {{#list}}
+    <div>
+        <div>
+            <ul>
+                <li>{{ a }}</li>
+                <li>
+                    <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                </li>
+                <li>{{ b }}</li>
+                <li>
+                    <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                </li>
+                <li>{{ c }}</li>
+                <li>
+                    <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{/list}}
+<p>{{name}}</p>
+        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+        <ul>
+                <li class="auctor eros ac lacus euismod tristique">Maecenas neque ligula, porttitor vel congue sed, bibendum nec lectus. Donec vitae tortor ipsum, vitae facilisis velit. Praesent vehicula diam non lacus consequat a vestibulum velit mollis. Fusce interdum gravida risus, sed pharetra urna convallis nec. Suspendisse potenti.</li>
+                <li>
+                        <div>
+                                <p>{{name}}</p>
+                                <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                                <a href="">Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. In vehicula ornare facilisis.</a>
+                        </div>
+                </li>
+                <li>
+                        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non magna.</p>
+                </li>
+        </ul>
+
+        {{#list}}
+        <div>
+                <div>
+                        <ul>
+                                <li>{{ a }}</li>
+                                <li>
+                                        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non
+ magna.</p>
+                                </li>                                <li>{{ b }}</li>
+                                <li>
+                                        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante
+, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non
+ magna.</p>                                </li>                                <li>{{ c }}</li>
+                                <li>
+                                        <p class="mollis quis malesuada sit amet fermentum a sem">Lorem ipsum dolor sit ament. Praesent elementum, risus id laoreet gravida, ligula odio sagittis ante
+, id gravida purus libero vel quam. Cras nec augue ac sem ornare fermentum. Mauris nulla lacus, commodo non hendrerit id, ullamcorper eget nisi. Fusce at nisi sed velit sollicitudin tincidunt eu non
+ magna.</p>
+                                </li>                        </ul>
+                </div>        </div>
+        {{/list}}
+
+</div>
+</script>
+
+<script src="/static/en/blog/array-splice-on-safari.js"></script>
+</div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="secondaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns2"><div xmlns:php="http://php.net/xsl" class="content"><h4>Latest <b>blog</b> posts.</h4>
+<ul>
+    <li><a href="/en/blog/2013/memcached-php">[2013-04-17] Memcached is a weird creature.</a></li>
+    <li><a href="/en/blog/jmeter-and-beanshell">[2013-01-28] Jmeter and BeanShell.</a></li>
+    <li><a href="/en/blog/mustache">[2012-11-08] Why you should update mustache.js.</a></li>
+    <li><a href="/en/blog/git-diff-mac">[2012-09-08] Visual `git diff` on MAC.</a></li>
+    <li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>
+    <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
+    <li><a href="/en/blog/git-config">[2012-03-23] Configure your git.</a></li>
+    <li><a href="/en/blog/phpunit_git_bisect">[2012-02-09] Debuging with GIT bisect and phpunit.</a></li>
+    <li><a href="/en/blog/set-up-dashboard">[2012-01-10] How to set-up your Dashboard.</a></li>
+</ul>
+			</div>
+<div xmlns:php="http://php.net/xsl" class="content">
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life&apos;s passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        </div>
+</div>
+</div>
+<br class="clear">
+</div></div>
+<div xmlns:php="http://php.net/xsl" id="footer" class="fixed"><div id="footer-inner" class="fullWidth">
+<div class="footer-about"><h4>What&apos;s <strong>inside</strong>?</h4>
+<img alt="Zend Framework" title="Zend Framework" src="/images/footer-zend-framework.png" class="logo" />
+<img alt="SVN" title="SVN"  src="/images/footer-svn.png" class="logo" />
+<img alt="PHP" title="PHP"  src="/images/footer-php.png" class="logo" />
+<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="/images/footer-jquery.png" class="logo" />
+
+<h4><strong>Get</strong> In Touch</h4>
+<p>If you intrested in testing Hoborg CMS, drop me an email at <strong>wojtek@hoborglabs.com</strong></p></div>
+<div class="footer-other"><h4><strong>Who</strong> is using hoborg CMS?</h4>
+<ul>
+<li>wojtek.it</li>
+<li>bhp-raciborz.pl</li>
+<li>hoborglabs.com</li>
+</ul>
+<p>Copyright &copy; 2010-2011 hoborglabs.com. All rights reserved.</p></div>
+</div></div>
+<script src="/static/scripts/main.js"></script>
+</body>
+</html>

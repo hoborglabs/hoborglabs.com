@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:php="http://php.net/xsl">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Home - Hoborg Labs</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" media="all" href="/static/styles/css/main.css">
+</head>
+<body><div xmlns:php="http://php.net/xsl" id="header">
+<div class="flags">
+<a href="/pl" class="flag pl">PL</a>, <a href="/en" class="flag gb">EN</a>
+</div>
+<div id="headerInner" class="fullWidth">
+<img class="logo" src="/images/logo.png"><div id="logo">
+<h1>
+<span>hoborg</span>labs.com</h1>
+<h2>by Wojtek Oledzki</h2>
+</div>
+<div id="menu"><ul>
+<li class="first "><a href="/en">Home</a></li>
+<li class=""><a href="/en/cms">Hoborg CMS</a></li>
+<li class="active"><a href="/en/blog">Blog</a></li>
+<li class="last "><a href="http://projects.hoborglabs.com/">Projects</a></li>
+</ul></div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="main" class="primaryContent"><div id="main_inner" class="fullWidth"><div xmlns:php="http://php.net/xsl" id="primaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns3"><div xmlns:php="http://php.net/xsl" class="content"><h3>This is how to <strong>add dashboard</strong> to your website.</h3>
+
+<p>This blog describes how I added dashboard to hoborglabs.com website. 
+You can check it out <a href="/dashboard">here</a>. The 
+initial version will display Jenkins jobs statuses.</p>
+
+<h4>download and Install</h4>
+
+<p>First I need a folder for 3rd party vendors, configs and widget&apos;s data files - easy!!</p>
+
+<pre><code>cd hoborglabs.com
+mkdir data
+mkdir conf
+mkdir htdocs/dashboard
+mkdir -p vendors/dashboard
+cd vendors/dashboard
+</code></pre>
+
+<p>Now I can download dashboard</p>
+
+<pre><code>wget http://dashboard.hoborglabs.com/downloads/dashboard.phar
+wget http://dashboard.hoborglabs.com/downloads/dashboard-assets.tgz
+</code></pre>
+
+<p>Now ... dashboard.phar does not serves assets. But the default assets set comes
+in nice tgz. I will unzip it in vendors folder and symlink it from my public 
+folder.</p>
+
+<pre><code>mkdir assets
+tar -xzf dashboard-assets.tgz -C assets/
+cd ../../htdocs/
+ln -s ../vendors/dashboard/assets/ dashboard-assets
+</code></pre>
+
+<p>Now let&apos;s make our dashboard page. (We are still in htdocs/ folder)</p>
+
+<pre><code>vim dashboard/index.php
+</code></pre>
+
+<p>And this is what you put inside</p>
+
+<pre><code>&lt;?php
+define(&apos;HD_PUBLIC&apos;, &apos;/dashboard-assets&apos;);
+define(&apos;CONFIG_DIR&apos;, __DIR__ . &apos;/../../conf/&apos;);
+include_once __DIR__ . &apos;/../../vendors/dashboard/dashboard.phar&apos;;
+
+$kernel = new \Hoborg\Dashboard\Kernel(&apos;prod&apos;);
+
+$kernel->setPath(&apos;data&apos;, array(__DIR__ . &apos;/../../data&apos;));
+$kernel->setDefaultParam(&apos;conf&apos;, &apos;hoborglabs-dashboard&apos;);
+
+// and go, go, go...
+$kernel->handle($_GET);
+</code></pre>
+
+<h4>Dashboard <strong>Configuration</strong>.</h4>
+
+<p>Now we have to prepare configuration file for our dashboard.</p>
+
+<pre><code>cd ../
+vim conf/hoborglabs-dashboard.json
+</code></pre>
+
+<p>and put this into your config file.</p>
+
+<pre><code>{
+  "template" : "hoborg",
+  "public" : "/dashboard-assets",
+  "widgets" : [
+    {
+      "name": "Jenkins Job Status",
+      "footer": "hoborg/jenkins/widget.php",
+      "size": "span8 autoHeight",
+      "body" : "Loading Content...",
+      "php": "hoborg/jenkins/widget.php",
+      "conf" : {
+        "data" : "jobs.json"
+      }
+    }
+  ]
+}
+</code></pre>
+
+<p>We also need empty list of json jobs for our widget.</p>
+
+<pre><code>echo "{}" > data/jobs.json
+</code></pre>
+
+<h4>Preparing data and <strong>Cron Jobs</strong>.</h4>
+
+<p>Now we just need to set up a cron job which will be updating Jenkins job statuses.</p>
+
+<pre><code>vim bin/dashboard-cli.php
+</code></pre>
+
+<p>and that&apos;s what you need to put in that file</p>
+
+<pre><code>&lt;?php
+include_once __DIR__ . &apos;/../vendors/dashboard/dashboard.phar&apos;;
+$kernel = new \Hoborg\Dashboard\Kernel(&apos;prod&apos;);
+
+$option = getopt(&apos;c:p:d:&apos;);
+$kernel->handleCli($option);
+</code></pre>
+
+<p>Now, let&apos;s get the data from Hoborg Labs jenkins view.</p>
+
+<pre><code>php bin/dashboard-cli.php -c widget.hoborg.jenkins.collector -d "url=http://leeds.oledzki.info:5080/jenkins/view/Hoborg%20Labs/" -d out=`pwd`/data/jobs.json
+</code></pre>
+
+<p>Now let&apos;s add it to crontab. Schedule the job wisely - if you project builds in
+10min schedule it for every 10min, if you don&apos;t commit that often, just 
+schedule it for every houer.</p>
+
+<pre><code>crontab -e
+*/30 * * * * php bin/dashboard-cli.php -c widget.hoborg.jenkins.collector -d "url=http://leeds.oledzki.info:5080/jenkins/view/Hoborg%20Labs/" -d out=`pwd`/data/jobs.json
+</code></pre>
+</div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="secondaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns2"><div xmlns:php="http://php.net/xsl" class="content"><h4>Latest <b>blog</b> posts.</h4>
+<ul>
+    <li><a href="/en/blog/2013/memcached-php">[2013-04-17] Memcached is a weird creature.</a></li>
+    <li><a href="/en/blog/jmeter-and-beanshell">[2013-01-28] Jmeter and BeanShell.</a></li>
+    <li><a href="/en/blog/mustache">[2012-11-08] Why you should update mustache.js.</a></li>
+    <li><a href="/en/blog/git-diff-mac">[2012-09-08] Visual `git diff` on MAC.</a></li>
+    <li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>
+    <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
+    <li><a href="/en/blog/git-config">[2012-03-23] Configure your git.</a></li>
+    <li><a href="/en/blog/phpunit_git_bisect">[2012-02-09] Debuging with GIT bisect and phpunit.</a></li>
+    <li><a href="/en/blog/set-up-dashboard">[2012-01-10] How to set-up your Dashboard.</a></li>
+</ul>
+			</div>
+<div xmlns:php="http://php.net/xsl" class="content">
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life&apos;s passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        </div>
+</div>
+</div>
+<br class="clear">
+</div></div>
+<div xmlns:php="http://php.net/xsl" id="footer" class="fixed"><div id="footer-inner" class="fullWidth">
+<div class="footer-about"><h4>What&apos;s <strong>inside</strong>?</h4>
+<img alt="Zend Framework" title="Zend Framework" src="/images/footer-zend-framework.png" class="logo" />
+<img alt="SVN" title="SVN"  src="/images/footer-svn.png" class="logo" />
+<img alt="PHP" title="PHP"  src="/images/footer-php.png" class="logo" />
+<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="/images/footer-jquery.png" class="logo" />
+
+<h4><strong>Get</strong> In Touch</h4>
+<p>If you intrested in testing Hoborg CMS, drop me an email at <strong>wojtek@hoborglabs.com</strong></p></div>
+<div class="footer-other"><h4><strong>Who</strong> is using hoborg CMS?</h4>
+<ul>
+<li>wojtek.it</li>
+<li>bhp-raciborz.pl</li>
+<li>hoborglabs.com</li>
+</ul>
+<p>Copyright &copy; 2010-2011 hoborglabs.com. All rights reserved.</p></div>
+</div></div>
+<script src="/static/scripts/main.js"></script>
+</body>
+</html>

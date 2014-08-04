@@ -1,0 +1,304 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:php="http://php.net/xsl">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Memcached is a Weird Monster - Hoborg Labs</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" media="all" href="/static/styles/css/main.css">
+</head>
+<body><div xmlns:php="http://php.net/xsl" id="header">
+<div class="flags">
+<a href="/pl" class="flag pl">PL</a>, <a href="/en" class="flag gb">EN</a>
+</div>
+<div id="headerInner" class="fullWidth">
+<img class="logo" src="/images/logo.png"><div id="logo">
+<h1>
+<span>hoborg</span>labs.com</h1>
+<h2>by Wojtek Oledzki</h2>
+</div>
+<div id="menu"><ul>
+<li class="first "><a href="/en">Home</a></li>
+<li class=""><a href="/en/cms">Hoborg CMS</a></li>
+<li class="last active"><a href="/en/blog">Blog</a></li>
+</ul></div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="main" class="primaryContent"><div id="main_inner" class="fullWidth"><div xmlns:php="http://php.net/xsl" id="primaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns3"><div xmlns:php="http://php.net/xsl" class="content"><h3><strong>Memcached</strong> is a Weird Creature.</h3>
+
+<p>... or maybe it&apos;s just the way you use it?<br />
+We are using memcached as our shared cache for PHP powered web tier.
+And for some time it was good. And by good I mean we didn&apos;t have
+any major problems despite the not-so-good way we have been using it.</p>
+
+<p>After several failed attempts of tweaking all kinds of Memcached
+options and even trying to <em>manually</em> manage list of memcached servers
+in PHP, I&apos;ve decided to dive into C code of PECL memcached extension
+and libmemcached. Now I want to share what I&apos;ve learn about
+libmemcached and memcached extension.</p>
+
+<p><strong>If you just want the code - <a href="#the-code">click here</a></strong></p>
+
+<h4>What is Our <strong>Desired Behaviour</strong>?</h4>
+
+<p>Depending on what do you use memcached for, you might need a different
+set of features.<br />
+In our case the ideal solution should support (a) memcached failover
+with (b) the minimum impact on missed hits. It should also (c) 
+automatically re-add server when it&apos;s available again (and again with
+minimum impact on missed hits).<br />
+Additionally we also need (d) persistent connections.</p>
+
+<p>Sounds really basic, but it caused me a few headaches!</p>
+
+<h4>Persistent Connections.</h4>
+
+<p>Persistent connection are good! But sometimes things can go really,
+really bad if you missconfigure something in your web tier. But this
+post is not about that, so just make sure that your number of apache
+workers is sane.</p>
+
+<p>The one thing you might want to know is that persistent memcached
+connection is not different from non-persistent from libmemcached point
+of view. When using persistent connection, memcached object is simply
+saved in PHP memory between requests using provided id.</p>
+
+<p>In other words libmemcached does not manage persistent connections,
+it&apos;s PHP!</p>
+
+<p>That has one simple implication. You only need to configure your 
+connection once when it&apos;s created. That includes setting all kind of
+options.</p>
+
+<pre><code>$cache = new Memcached(&apos;persistant-id&apos;);
+
+// only add servers and set options when you get new persistent
+// memcached instance, otherwise it is all set up.
+if ( 0 == count($cache->getServerList()) ) {
+  $cache->addServers( $servers );
+  $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+}
+</code></pre>
+
+<p>If you are thinging right now: "Bollocks! I have to set options on each
+request, otherwise it doesn&apos;t work!" just keep calm and continue
+reading.</p>
+
+<h4>Consistent Hashing.</h4>
+
+<p>Everybody knows what consistent distribution is all about. But I (and
+maybe you too) made some false assumptions about it.<br />
+I&apos;ve assumed that memcached driver will take care of dead servers and
+will start reassigning keys from dead server across existing ones - oh
+boy, I was wrong :)
+What consistent distribution means is that given keys will be stored on
+given servers <strong>no matter what</strong>. The distribution will change when you
+ask driver to recalculate it, by setting distribution method again,
+which updates hashing function and dead server(s) are no longer used.</p>
+
+<p>It&apos;s hard to tell if that&apos;s a bug or desired behaviour of libmemcahced
+(up to 1.0.16). You can <a href="https://code.google.com/p/memcached/wiki/NewConfiguringClient">read more here</a>.</p>
+
+<p>This simple example will update hashing continuum on fatal errors.</p>
+
+<pre><code>$cache = new Memcached(&apos;persistant-id&apos;);
+
+// only add servers and set options when you get new persistent
+// memcached instance, otherwise it is all set up.
+if (count($cache->getServerList()) == 0) {
+  $cache->addServers($servers);
+  $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+}
+
+for ($i = 0; $ < 10; $i++) {
+    $val = $cache->get("my-key-{$i}");
+    $code = $cache->getResultCode();
+
+    // check for errors
+    if (in_array($code, array(26, 31, 2, 11, 35, 3, 47)) {
+        // server dead, force recalculation of distribution
+        $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+
+        // handle error
+        echo "error code: {$code}";
+    }
+
+    // save data if not present
+    if (!$val) {
+        $cache->set("my-key-{$i}", md5(rand(0, 100)));
+    }
+}
+</code></pre>
+
+<p>The <strong>most important part</strong> here is that <code>$cache->set</code> is fired after
+setting OPT_LIBKETAMA_COMPATIBLE again after detecting error. That
+triggers recalculation of consistent distribution continuum, and the
+<code>set</code> method will not try to use any dead servers.</p>
+
+<h4>Failover and Auto Recovery</h4>
+
+<p>Now, we got persistent connections and as soon as fatal error will 
+accure we will stop using it and redistribute keys to other servers.<br />
+Now we want make sure that we will star using bad servers the second
+it&apos;s back on line.</p>
+
+<pre><code>if (count($cache->getServerList()) == 0) {
+  $cache->addServers($servers);
+  $cache->setOption( Memcached::OPT_REMOVE_FAILED_SERVERS, 100 );
+  $cache->setOption( Memcached::OPT_RETRY_TIMEOUT,       5 );
+  $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE,  true );
+}
+</code></pre>
+
+<p>Remember that memcached object is saved in PHP memmory between
+requests. Which means that libmemcached will stop trying to reconnect
+after reaching failure limit. You have to make sure that your apache
+worker is beeing recycled, and that limit is fine with your platform
+ops.</p>
+
+<p>You can be more clever and double retry timeout on each failure.</p>
+
+<h4>Other Facts, tipas & tricks</h4>
+
+<p>Setting <code>OPT_REMOVE_FAILED_SERVERS</code> will automaticlly set
+<code>OPT_SERVER_FAILURE_LIMIT</code> and <code>OPT_AUTO_EJECT_HOSTS</code> which exaplins a
+little bit why <code>OPT_AUTO_EJECT_HOSTS</code> is deprecated in libmemcached
+docs ;)</p>
+
+<p><code>OPT_RETRY_TIMEOUT</code> is by default set to 2 seconds, not 0.</p>
+
+<p>Turning off <code>OPT_LIBKETAMA_COMPATIBLE</code> will set distribution to 
+<code>DISTRIBUTION_MODULA</code> (!)</p>
+
+<p>Only following distribution takes into account ejected servers.
+<code>CONSISTENT</code>, <code>CONSISTENT_KETAMA</code>, <code>CONSISTENT_KETAMA_SPY</code> or 
+<code>CONSISTENT_WEIGHTED</code> (5),<br />
+Enabling <code>OPT_LIBKETAMA_COMPATIBLE</code> which will set distribution to
+<code>CONSISTENT_WEIGHTED</code>.</p>
+
+<p>When using consistent distribution DO NOT manipulate with number of
+servers manually in your php code - let the driver do the work!</p>
+
+<h4 id="the-code">The Code</h4>
+
+<p>This is fully working example code.<br />
+Try running it like that while turning on and off your memcached servers.</p>
+
+<pre><code>bash -c "while true; do curl -s http://wo.local/public/memcached.php; sleep 0.5; done;" | awk &apos;{ if ($1 == "OK") { ok = ok + 1 } else { err = err + 1 } if ($2 == "127.0.0.1") { s1 = s1 + 1 } else { s2 = s2 +1 } print "OK: " ok ", ERR: " err ", SERVERS HIT COUNT [" s1 ", " s2 "]";}&apos;
+</code></pre>
+
+<p>I&apos;ve made one shortcut and I&apos;m checking reponse code after calling both
+<code>get</code> and <code>set</code>. In your production code do check result code after
+each Memcached call.</p>
+
+<pre><code>$cache = new Memcached(&apos;persistant-id&apos;);
+$servers = array(
+    array(&apos;127.0.0.1&apos;, 11211),
+    array(&apos;127.0.0.2&apos;, 11212),
+);
+$fatalCodes = array(
+    Memcached::RES_ERRNO,
+    Memcached::RES_TIMEOUT,
+    Memcached::RES_HOST_LOOKUP_FAILURE,
+    Memcached::RES_CONNECTION_SOCKET_CREATE_FAILURE,
+    Memcached::RES_SERVER_MARKED_DEAD,
+    3, // MEMCACHED_CONNECTION_FAILURE
+    47, // MEMCACHED_SERVER_TEMPORARILY_DISABLED
+);
+
+// only add servers and set options when you get new persistent
+// memcached instance, otherwise it is all set up.
+if (0 == count($cache->getServerList())) {
+    $cache->addServers($servers);
+    $cache->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE,  true);
+    $cache->setOption(Memcached::OPT_REMOVE_FAILED_SERVERS, 12);
+    $cache->setOption(Memcached::OPT_RETRY_TIMEOUT,      1);
+
+    $cache->setOption(Memcached::OPT_CONNECT_TIMEOUT, 100); // miliseconds
+    $cache->setOption(Memcached::OPT_NO_BLOCK, 1);
+    $cache->setOption(Memcached::OPT_POLL_TIMEOUT, 100);    // miliseconds
+    $cache->setOption(Memcached::OPT_SEND_TIMEOUT, 100000); // microseconds
+    $cache->setOption(Memcached::OPT_RECV_TIMEOUT, 100000); // microseconds
+}
+
+for ($i = 0; $i < 40; $i++) {
+    $key = "my-key-{$i}";
+    $val = $cache->get($key);
+
+    // save data if not present
+    if (!$val) {
+        $cache->set($key, md5(rand(0, 100)));
+    }
+
+    $code = $cache->getResultCode();
+    $server = $cache->getServerByKey($key);
+    $host = $server[&apos;host&apos;];
+
+    // check for errors
+    if (in_array($code, $fatalCodes)) {
+        // server dead, force recalculation of distribution
+        $cache->setOption( Memcached::OPT_LIBKETAMA_COMPATIBLE, true );
+
+        // handle error
+        // ...
+        echo "ERR {$host}\n";
+    } else {
+        echo "OK {$host}\n";
+    }
+}
+</code></pre>
+</div>
+<div id="fb-root"></div><script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=139639299507874";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, "script", "facebook-jssdk"));</script>
+				<h3>Comments</h3>
+						<div class="fb-comments" data-href="http://hoborglabs.com/" data-width="543" data-num-posts="2"></div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="secondaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns2"><div xmlns:php="http://php.net/xsl" class="content"><h4>Latest <b>blog</b> posts.</h4>
+<ul>
+    <li><a href="/en/blog/2013/memcached-php">[2013-04-17] Memcached is a weird creature.</a></li>
+    <li><a href="/en/blog/jmeter-and-beanshell">[2013-01-28] Jmeter and BeanShell.</a></li>
+    <li><a href="/en/blog/mustache">[2012-11-08] Why you should update mustache.js.</a></li>
+    <li><a href="/en/blog/git-diff-mac">[2012-09-08] Visual `git diff` on MAC.</a></li>
+    <li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>
+    <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
+    <li><a href="/en/blog/git-config">[2012-03-23] Configure your git.</a></li>
+    <li><a href="/en/blog/phpunit_git_bisect">[2012-02-09] Debuging with GIT bisect and phpunit.</a></li>
+    <li><a href="/en/blog/set-up-dashboard">[2012-01-10] How to set-up your Dashboard.</a></li>
+</ul>
+			</div>
+<div xmlns:php="http://php.net/xsl" class="content">
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life&apos;s passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+						</div>
+</div>
+</div>
+<br class="clear">
+</div></div>
+<div xmlns:php="http://php.net/xsl" id="footer" class="fixed"><div id="footer-inner" class="fullWidth">
+<div class="footer-about"><h4>What&apos;s <strong>inside</strong>?</h4>
+<img alt="Zend Framework" title="Zend Framework" src="/images/footer-zend-framework.png" class="logo" />
+<img alt="SVN" title="SVN"  src="/images/footer-svn.png" class="logo" />
+<img alt="PHP" title="PHP"  src="/images/footer-php.png" class="logo" />
+<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="/images/footer-jquery.png" class="logo" />
+
+<h4><strong>Get</strong> In Touch</h4>
+<p>If you intrested in testing Hoborg CMS, drop me an email at <strong>wojtek@hoborglabs.com</strong></p></div>
+<div class="footer-other"><h4><strong>Who</strong> is using hoborg CMS?</h4>
+<ul>
+<li>wojtek.it</li>
+<li>bhp-raciborz.pl</li>
+<li>hoborglabs.com</li>
+</ul>
+<p>Copyright &copy; 2010-2011 hoborglabs.com. All rights reserved.</p></div>
+</div></div>
+<script src="/static/scripts/main.js"></script>
+</body>
+</html>

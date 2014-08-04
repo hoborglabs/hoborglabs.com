@@ -1,0 +1,449 @@
+/* TEST */
+/**
+ Global CSS for hoborglabs.com
+ */
+
+
+/*------------------------------------*\
+	$RESET
+\*------------------------------------*/
+/*
+A more considered reset; more of a restart... csswizardry.com/2011/10/reset-restarted
+*/
+html,body,div,span,applet,object,iframe,
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,hr,
+a,abbr,address,cite,code,
+del,dfn,em,img,ins,kbd,q,s,samp,
+small,strong,sub,sup,tt,var,
+b,u,i,
+dl,dt,dd,ol,ul,li,
+fieldset,form,label,legend,
+table,caption,tbody,tfoot,thead,tr,th,td,
+article,aside,canvas,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section,summary,
+time,mark,audio,video{
+	margin:0;
+	padding:0;
+}
+article,aside,details,figcaption,figure,footer,
+header,hgroup,menu,nav,section{
+	display:block;
+}
+h1,h2,h3,h4,h5,h6{
+	font-size:1em;
+}
+table{
+	border-collapse:collapse;
+	border-spacing:0;
+}
+strong,b,mark{
+	font-weight:bold;
+	font-style:inherit;
+}
+em,i,cite,q,address,dfn,var{
+	font-style:italic;
+	font-weight:inherit;
+}
+abbr[title],dfn[title]{
+	cursor:help;
+	border-bottom:1px dotted;
+}
+ins{
+	border-bottom:1px solid;
+}
+a,u,ins{
+	text-decoration:none;
+}
+del,s{
+	text-decoration:line-through;
+}
+pre,code,samp,kbd{
+	font-family:monospace;
+}
+small{
+	font-size:0.75em;
+}
+img{
+	border:none;
+	font-style:italic;
+}
+input,
+select,option,optgroup,
+textarea{
+	font:inherit;
+}
+
+/**
+ * JENKINS STATUS
+ */
+div.h-jenkins {
+}
+ul.h-jenkins-projects {
+	list-style: none;
+}
+ul.h-jenkins-projects li {
+    background: transparent url(../gfx/question_mark.png) left center no-repeat;
+    padding: 0px 0px 0px 36px;
+}
+ul.h-jenkins-projects img {
+    border: none;
+}
+ul.h-jenkins-projects span.h-jenkins-jobname {
+	font-size: 120%;
+	font-weight: bold;
+	padding: -2px 0px 2xp 0px;
+}
+
+/** Headers */
+.h-dashboard #main_inner .header h4 {
+    font-weight: normal;
+    letter-spacing: 0px;
+    text-transform: uppercase;
+    border: none;
+    color: #999999;
+    font-size: 14px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.h-dashboard #main_inner .header h4 span {
+    font-size: 130%;
+    font-weight: bold;
+}
+
+.h-dashboard .h-widget {
+	float: left;
+	margin: 5px;
+	background-color: #373737;
+	color: #FFFFFF;
+}
+
+.h-dashboard .h-widget-1-1 {
+	width: 180px;
+	height: 180px;
+}
+.h-dashboard .h-widget-1-2 {
+    width: 180px;
+    height: 370px;
+}
+.h-dashboard .h-widget-5-1 {
+    width: 940px;
+    height: 180px;
+}
+.h-dashboard .h-widget-2-1 {
+    width: 370px;
+    height: 180px;
+}
+.h-dashboard .h-widget-2-2 {
+    width: 370px;
+    height: 370px;
+}
+.h-dashboard .h-widget-3-2 {
+    width: 560px;
+    height: 370px;
+}
+.h-dashboard .h-widget-4-2 {
+    width: 750px;
+    height: 370px;
+}
+.h-dashboard .h-widget-5-2 {
+    width: 940px;
+    height: 370px;
+}
+
+/**
+ * Dashboard styles
+ */
+ .h-dashboard .h-widget .content {
+ }
+.h-dashboard .h-widget .header {
+    border-bottom: 1px solid #131313;
+    border-top: 1px solid #414141;
+    padding: 8px 15px 10px;
+    height: 15px;
+}
+.h-dashboard .h-widget .body {
+    border-bottom: 1px solid #131313;
+    border-top: 1px solid #515151;
+    padding: 10px 15px;
+    overflow: hidden;
+}
+.h-dashboard .h-widget-1-1 .body,
+.h-dashboard .h-widget-2-1 .body,
+.h-dashboard .h-widget-3-1 .body,
+.h-dashboard .h-widget-4-1 .body,
+.h-dashboard .h-widget-5-1 .body {
+	height: 90px;
+}
+.h-dashboard .h-widget-1-2 .body,
+.h-dashboard .h-widget-2-2 .body,
+.h-dashboard .h-widget-3-2 .body,
+.h-dashboard .h-widget-4-2 .body,
+.h-dashboard .h-widget-5-2 .body {
+    height: 280px;
+}
+.h-dashboard .h-widget .footer {
+    border-bottom: 1px solid #131313;
+    border-top: 1px solid #414141;
+    background-color: #272727;
+    color: #666666;
+    padding: 5px 15px;
+    height: 20px;
+}
+
+.h-dashboard .h-widget .h-widget-text-XXL {
+    font-size: 56px;
+    line-height: 48px;
+    font-weight: bold;
+    letter-spacing: -6px;
+    text-shadow: 0 0 8px black;
+}
+.h-dashboard .h-widget .h-widget-text-XL {
+    font-size: 44px;
+    line-height: 48px;
+    font-weight: bold;
+    letter-spacing: -2px;
+    text-shadow: 0 0 6px black;
+}
+.h-dashboard .h-widget .h-widget-text-L {
+    font-size: 32px;
+    font-weight: bold;
+}
+.h-dashboard .h-widget .h-widget-text-M {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.h-dashboard .h-widget .h-widget-progressBar {
+	height: 26px;
+	width: 100%;
+	border: 2px #292929 solid;
+	margin: 8px -2px;
+}
+
+.h-dashboard .h-widget .h-widget-progressBar div {
+    float: left;
+    height: 100%;
+}
+.h-dashboard .h-widget .h-widget-progressBar .green {
+    background-color: green;
+}
+.h-dashboard .h-widget .h-widget-progressBar.red {
+    background-color: red;
+}
+
+
+/**
+ * Main
+ */
+#main.h-dashboard {
+    background: transparent;
+}
+
+
+/* Selection colours (easy to forget) */
+
+::selection         {background: rgb(255,255,158);}
+::-moz-selection    {background: rgb(255,255,158);}
+img::selection      {background: transparent;}
+img::-moz-selection {background: transparent;}
+body                {-webkit-tap-highlight-color: rgb(255,255,158);}
+
+    .container .row {
+        width: auto;
+    }
+
+@media only screen and (max-width: 768px) {
+
+	#header {
+		height: auto;
+	}
+		#headerInner {
+			height: auto;
+		}
+	img.logo {
+		float: left;
+		position: relative;
+		margin: 12px 0 0 4px;
+	}
+	#logo {
+		position: static;
+		height: 62px;
+		margin: 0 0 0 102px;
+		padding: 60px 0px 0px 0px;
+	}
+	#logo h2 {
+		color: #D2DCE5;
+		display: inline;
+		font-size: 1em;
+		padding-left: 0;
+		white-space: nowrap;
+	}
+	#menu {
+		position: static;
+		height: 26px;
+		padding: 6px 0px 0px 0px;
+	}
+		#menu li a {
+			padding: 4px 8px;
+			margin-left: 4px;
+			height: 16px;
+		}
+}
+
+@media only screen and (max-width: 480px) {
+	#logo {
+		height: 72px;
+		padding: 50px 0px 0px 0px;
+		margin: 0 0 0 116px;
+	}
+	#logo h2 {
+		display: block;
+	}
+}
+
+/*      Tablet Layout: 768px.
+        Gutters: 24px.
+        Outer margins: 28px.
+        Inherits styles from: Default Layout.
+-----------------------------------------------------------------
+cols    1     2      3      4      5      6      7      8
+px      68    160    252    344    436    528    620    712    */
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+	#headerInner {
+		width: auto;
+	}
+    .fullWidth {
+       width: 97%;
+       margin-left: auto;
+       margin-right: auto;
+    }
+    div.columns3 {
+        width: 100%;
+    }
+    #footer-inner {
+        width: 97%;
+        margin: 0px auto;
+    }
+        .footer-about,
+        .footer-other {
+            float: left;
+            width: 50%;
+            margin: 0px 0px 0px 0px;
+            padding: 24px 0px 0px 0px
+        }
+        .footer-other > * {
+            padding-left: 20px;
+        }
+
+	img.column1 {
+	    width: 50%;
+	}
+	img.columns2 {
+	    width: 50%;
+	}
+	img.columns3 {
+	    width: 100%;
+	}
+	img.columns4 {
+	    width: 100%;
+	}
+	img.columns5 {
+	    width: 100%;
+	}
+}
+
+/*      Wide Mobile Layout: 480px.
+        Gutters: 24px.
+        Outer margins: 22px.
+        Inherits styles from: Default Layout, Mobile Layout.
+------------------------------------------------------------
+cols    1     2      3      4      5
+px      68    160    252    344    436    */
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	#headerInner {
+		width: auto;
+	}
+    .fullWidth {
+        width: 97%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #secondaryContent {
+        width: 100%;
+        margin: 0px;
+    }
+    div.columns1,
+    div.columns2 {
+        width: 50%;
+    }
+    div.columns3 {
+        width: 100%;
+    }
+    #footer-inner {
+        width: 97%;
+        margin: 0px auto;
+    }
+        .footer-about,
+        .footer-other {
+            float: left;
+            width: 50%;
+            margin: 0px 0px 0px 0px;
+            padding: 24px 0px 0px 0px
+        }
+        .footer-other > * {
+            padding-left: 20px;
+        }
+}
+
+@media only screen and (max-width: 480px) {
+	#headerInner {
+		width: auto;
+	}
+	#logo h1 {
+		font-size: 28px;
+	}
+    .fullWidth {
+        width: 97%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #secondaryContent {
+        width: 100%;
+        margin: 0px;
+    }
+    div.columns1,
+    div.columns2,
+    div.columns3 {
+        width: 100%;
+    }
+    #footer-inner {
+        width: 97%;
+        margin: 0px auto 40px auto;
+    }
+        .footer-about,
+        .footer-other {
+            float: none;
+            width: 100%;
+            margin: 0px 0px 0px 0px;
+            padding: 24px 0px 0px 0px
+        }
+
+        	img.column1 {
+	    width: 50%;
+	}
+	img.columns2 {
+	    width: 40%;
+	}
+	img.columns3 {
+	    width: 95%;
+	}
+	img.columns4 {
+	    width: 95%;
+	}
+	img.columns5 {
+	    width: 95%;
+	}
+}

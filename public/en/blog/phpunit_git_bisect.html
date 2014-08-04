@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:php="http://php.net/xsl">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>Home - Hoborg Labs</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" media="all" href="/static/styles/css/main.css">
+</head>
+<body><div xmlns:php="http://php.net/xsl" id="header">
+<div class="flags">
+<a href="/pl" class="flag pl">PL</a>, <a href="/en" class="flag gb">EN</a>
+</div>
+<div id="headerInner" class="fullWidth">
+<img class="logo" src="/images/logo.png"><div id="logo">
+<h1>
+<span>hoborg</span>labs.com</h1>
+<h2>by Wojtek Oledzki</h2>
+</div>
+<div id="menu"><ul>
+<li class="first "><a href="/en">Home</a></li>
+<li class=""><a href="/en/cms">Hoborg CMS</a></li>
+<li class="active"><a href="/en/blog">Blog</a></li>
+<li class="last "><a href="http://projects.hoborglabs.com/">Projects</a></li>
+</ul></div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="main" class="primaryContent"><div id="main_inner" class="fullWidth"><div xmlns:php="http://php.net/xsl" id="primaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns3"><div xmlns:php="http://php.net/xsl" class="content"><h3>PHPUnit <strong>testsuites</strong> and git <strong>bisect</strong></h3>
+
+<p>Today I had a weird mistery to solve. How it turns out it was one of the unit 
+test not beeing so unit after all and it was causing errors in other tests.</p>
+
+<p>Long story short, it took me a while to realize that one of the 4000 tests is 
+causing errors in some other test. With that I finally could replicate it on
+my local machine.</p>
+
+<h4>enter testsuites and git bisect</h4>
+
+<p>When I finally realize what is going on, it was dead easy to find the commit
+which introduced that error - the unfortunate build had more the 30 commits.</p>
+
+<p>First step was to craft small phpunit.debug.xml which was running only two
+test classes.</p>
+
+<pre><code>&lt;phpunit bootstrap="./bootstrap.php"
+    colors="true"
+    backupGlobals="false"
+    strict="true"
+>
+    &lt;testsuites>
+        &lt;testsuite name="debug suite">
+            &lt;file>src/Company/ModuleA/ClassTest.php&lt;/file>
+            &lt;file>src/Company/ModuleB/ClassTest.php&lt;/file>
+        &lt;/testsuite>
+    &lt;/testsuites>
+&lt;/phpunit>
+</code></pre>
+
+<p>Second step was to use git bisect to find which commit broke the build. It&apos;s
+super easy! that&apos;s the way I use it</p>
+
+<p>checkout the last commit that passes our test, and tell git to start bisecting
+process.</p>
+
+<pre><code>git checkout 123abc
+git bisect start
+</code></pre>
+
+<p>Now we have to tell git whereabout did we introduced the bug. Let start with
+sying that current version is good</p>
+
+<pre><code>git bisect good
+</code></pre>
+
+<p>By checking you CI server we can get the commit where it was defenatelly bad.</p>
+
+<pre><code>git bisect bad 456cde
+</code></pre>
+
+<p>Now git will checkout a new version of the code - somewhere between good and 
+bad revision. You have to test it ad tell git if the current version is good 
+or bad. That&apos;s it!</p>
+
+<p>Using testsuites allows you to run the test in seconds, so the whole process of
+finding the smelly commit will not take you long.</p>
+
+<p>You can automate the whole process even more by writing a small script 
+returning 0 indicating good result or 1 for bad result, and just let git find 
+it for you</p>
+
+<pre><code>bisect run my_script
+</code></pre>
+
+<p>If you want to know more about git bisect google it up or check these two 
+links: <a href="http://linux.die.net/man/1/git-bisect">git-bisect man page</a> and 
+<a href="http://book.git-scm.com/5_finding_issues_-_git_bisect.html">git book</a></p>
+</div>
+</div>
+</div>
+<div xmlns:php="http://php.net/xsl" id="secondaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns2"><div xmlns:php="http://php.net/xsl" class="content"><h4>Latest <b>blog</b> posts.</h4>
+<ul>
+    <li><a href="/en/blog/2013/memcached-php">[2013-04-17] Memcached is a weird creature.</a></li>
+    <li><a href="/en/blog/jmeter-and-beanshell">[2013-01-28] Jmeter and BeanShell.</a></li>
+    <li><a href="/en/blog/mustache">[2012-11-08] Why you should update mustache.js.</a></li>
+    <li><a href="/en/blog/git-diff-mac">[2012-09-08] Visual `git diff` on MAC.</a></li>
+    <li><a href="/en/blog/graphite-widget">[2012-04-16] Power your dashboard with Graphite.</a></li>
+    <li><a href="/en/blog/trello-and-xen">[2012-03-30] Use Trello for your VMs status board.</a></li>
+    <li><a href="/en/blog/git-config">[2012-03-23] Configure your git.</a></li>
+    <li><a href="/en/blog/phpunit_git_bisect">[2012-02-09] Debuging with GIT bisect and phpunit.</a></li>
+    <li><a href="/en/blog/set-up-dashboard">[2012-01-10] How to set-up your Dashboard.</a></li>
+</ul>
+			</div>
+<div xmlns:php="http://php.net/xsl" class="content">
+<h4><span>About</span> Me</h4>
+<p>All aspects of web application, focusing mainly on user experience, has been one of my life&apos;s passions. My interests cover the fields of service oriented applications, databases and distributed systems.</p>
+                        </div>
+</div>
+</div>
+<br class="clear">
+</div></div>
+<div xmlns:php="http://php.net/xsl" id="footer" class="fixed"><div id="footer-inner" class="fullWidth">
+<div class="footer-about"><h4>What&apos;s <strong>inside</strong>?</h4>
+<img alt="Zend Framework" title="Zend Framework" src="/images/footer-zend-framework.png" class="logo" />
+<img alt="SVN" title="SVN"  src="/images/footer-svn.png" class="logo" />
+<img alt="PHP" title="PHP"  src="/images/footer-php.png" class="logo" />
+<img alt="jQuery Core & UI" title="jQuery Core & UI"  src="/images/footer-jquery.png" class="logo" />
+
+<h4><strong>Get</strong> In Touch</h4>
+<p>If you intrested in testing Hoborg CMS, drop me an email at <strong>wojtek@hoborglabs.com</strong></p></div>
+<div class="footer-other"><h4><strong>Who</strong> is using hoborg CMS?</h4>
+<ul>
+<li>wojtek.it</li>
+<li>bhp-raciborz.pl</li>
+<li>hoborglabs.com</li>
+</ul>
+<p>Copyright &copy; 2010-2011 hoborglabs.com. All rights reserved.</p></div>
+</div></div>
+<script src="/static/scripts/main.js"></script>
+</body>
+</html>
