@@ -22,13 +22,14 @@
 <div id="menu"><ul>
 <li class="first "><a href="/en">Home</a></li>
 <li class=""><a href="/en/cms">Hoborg CMS</a></li>
-<li class="last active"><a href="/en/blog">Blog</a></li>
+<li class="active"><a href="/en/blog">Blog</a></li>
+<li class="last "><a href="/en/projects">Projects</a></li>
 </ul></div>
 </div>
 </div>
 <div xmlns:php="http://php.net/xsl" id="main" class="primaryContent"><div id="main_inner" class="fullWidth"><div xmlns:php="http://php.net/xsl" id="primaryContent"><div xmlns:php="http://php.net/xsl" class="grid columns3"><div xmlns:php="http://php.net/xsl" class="content"><h3><strong>Memcached</strong> is a Weird Creature.</h3>
 
-<p>... or maybe it&apos;s just the way you use it?<br />
+<p>... or maybe it&apos;s just the way you use it?
 We are using memcached as our shared cache for PHP powered web tier.
 And for some time it was good. And by good I mean we didn&apos;t have
 any major problems despite the not-so-good way we have been using it.</p>
@@ -44,11 +45,11 @@ libmemcached and memcached extension.</p>
 <h4>What is Our <strong>Desired Behaviour</strong>?</h4>
 
 <p>Depending on what do you use memcached for, you might need a different
-set of features.<br />
+set of features.
 In our case the ideal solution should support (a) memcached failover
-with (b) the minimum impact on missed hits. It should also (c) 
+with (b) the minimum impact on missed hits. It should also (c)
 automatically re-add server when it&apos;s available again (and again with
-minimum impact on missed hits).<br />
+minimum impact on missed hits).
 Additionally we also need (d) persistent connections.</p>
 
 <p>Sounds really basic, but it caused me a few headaches!</p>
@@ -68,7 +69,7 @@ saved in PHP memory between requests using provided id.</p>
 <p>In other words libmemcached does not manage persistent connections,
 it&apos;s PHP!</p>
 
-<p>That has one simple implication. You only need to configure your 
+<p>That has one simple implication. You only need to configure your
 connection once when it&apos;s created. That includes setting all kind of
 options.</p>
 
@@ -89,7 +90,7 @@ reading.</p>
 <h4>Consistent Hashing.</h4>
 
 <p>Everybody knows what consistent distribution is all about. But I (and
-maybe you too) made some false assumptions about it.<br />
+maybe you too) made some false assumptions about it.
 I&apos;ve assumed that memcached driver will take care of dead servers and
 will start reassigning keys from dead server across existing ones - oh
 boy, I was wrong :)
@@ -139,8 +140,8 @@ triggers recalculation of consistent distribution continuum, and the
 
 <h4>Failover and Auto Recovery</h4>
 
-<p>Now, we got persistent connections and as soon as fatal error will 
-accure we will stop using it and redistribute keys to other servers.<br />
+<p>Now, we got persistent connections and as soon as fatal error will
+accure we will stop using it and redistribute keys to other servers.
 Now we want make sure that we will star using bad servers the second
 it&apos;s back on line.</p>
 
@@ -169,12 +170,12 @@ docs ;)</p>
 
 <p><code>OPT_RETRY_TIMEOUT</code> is by default set to 2 seconds, not 0.</p>
 
-<p>Turning off <code>OPT_LIBKETAMA_COMPATIBLE</code> will set distribution to 
+<p>Turning off <code>OPT_LIBKETAMA_COMPATIBLE</code> will set distribution to
 <code>DISTRIBUTION_MODULA</code> (!)</p>
 
 <p>Only following distribution takes into account ejected servers.
-<code>CONSISTENT</code>, <code>CONSISTENT_KETAMA</code>, <code>CONSISTENT_KETAMA_SPY</code> or 
-<code>CONSISTENT_WEIGHTED</code> (5),<br />
+<code>CONSISTENT</code>, <code>CONSISTENT_KETAMA</code>, <code>CONSISTENT_KETAMA_SPY</code> or
+<code>CONSISTENT_WEIGHTED</code> (5),
 Enabling <code>OPT_LIBKETAMA_COMPATIBLE</code> which will set distribution to
 <code>CONSISTENT_WEIGHTED</code>.</p>
 
@@ -183,7 +184,7 @@ servers manually in your php code - let the driver do the work!</p>
 
 <h4 id="the-code">The Code</h4>
 
-<p>This is fully working example code.<br />
+<p>This is fully working example code.
 Try running it like that while turning on and off your memcached servers.</p>
 
 <pre><code>bash -c "while true; do curl -s http://wo.local/public/memcached.php; sleep 0.5; done;" | awk &apos;{ if ($1 == "OK") { ok = ok + 1 } else { err = err + 1 } if ($2 == "127.0.0.1") { s1 = s1 + 1 } else { s2 = s2 +1 } print "OK: " ok ", ERR: " err ", SERVERS HIT COUNT [" s1 ", " s2 "]";}&apos;

@@ -4,22 +4,8 @@
         <name><![CDATA[Home]]></name>
     </data>
     <component file="includes/google-analytics.page" id="16" />
-    <component name="header" id="1">
-        <data>
-            <titlePrimary><![CDATA[hoborg]]></titlePrimary>
-            <titleSecondary><![CDATA[labs.com]]></titleSecondary>
-            <subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
-            <menuLang><![CDATA[en]]></menuLang>
-            <menu>
-                <en>
-                    <link href="/en">Home</link>
-                    <link href="/en/cms">Hoborg CMS</link>
-                    <link href="/en/blog" active="active">Blog</link>
-                    <link href="http://projects.hoborglabs.com/">Projects</link>
-                </en>
-            </menu>
-        </data>
-    </component>
+    <component file="includes/en/header.page" id="1" />
+
     <component name="main" id="2">
         <component name="content" id="3" parent-id="2">
             <data>

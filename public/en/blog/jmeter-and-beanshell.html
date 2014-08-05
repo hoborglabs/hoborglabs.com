@@ -23,7 +23,7 @@
 <li class="first "><a href="/en">Home</a></li>
 <li class=""><a href="/en/cms">Hoborg CMS</a></li>
 <li class="active"><a href="/en/blog">Blog</a></li>
-<li class="last "><a href="http://projects.hoborglabs.com/">Projects</a></li>
+<li class="last "><a href="/en/projects">Projects</a></li>
 </ul></div>
 </div>
 </div>
@@ -38,8 +38,8 @@ Seriously!</p>
 <p>I&apos;m a performance engineer at BSkyB, and couple of times a year we test
 how our platform reacts to all sorts of heavy load. We have been using
 Jmeter as our main tool, and from day one the biggest challenge was to
-have full control during load testing.<br />
-As many of you know, Jmeter comes with build in 
+have full control during load testing.
+As many of you know, Jmeter comes with build in
 <a href="http://jmeter.apache.org/usermanual/component_reference.html#Thread_Group">Thread Group</a>
 component. It works absolutely fine, but it&apos;s not very useful in real
 life. There is also <a href="http://code.google.com/p/jmeter-plugins/wiki/UltimateThreadGroup">Ultimate Thread Group</a>
@@ -49,22 +49,22 @@ plugin, which is great, but it was still not enough.</p>
 
 <p>Imagine a 4 hours long load test, during that time you would probably
 like to control how many users try to login to your system, brows your
-website, recover login details etc. In many cases your company is 
+website, recover login details etc. In many cases your company is
 running more then just one site, which makes it even more fun. On top
 of that you have your DevOps and PlatformOps engineers screaming from
 time to time that DB Servers|Web Servers|Cache Servers|Backend BlackBox
 is about to explode and you have to adjust the load immediately. It is
 almost like you need a big mixing console with uncountable number of
-knobs for adjusting all aspects of load test you are running.<br />
+knobs for adjusting all aspects of load test you are running.
 ... but all you really need is a BeanShell Server ;)</p>
 
 <h4 id="our-solution">Our <strong>solution</strong></h4>
 
 <p>We use a bunch of little test plans to build our main plan. Each script
-can be easily configured using <code>user.properties</code> file.<br />
+can be easily configured using <code>user.properties</code> file.
 <em>Check out "<a href="/en/blog/jmeter-jmx-fragmentation">Jmeter Test Plan Fragmentation</a>"
-which explains how I split my test plans.</em><br />
-Now imagine you can change these values with a little help from 
+which explains how I split my test plans.</em>
+Now imagine you can change these values with a little help from
 BeanShell while Jmeter executes your test plan, allowing you to shape
 load how ever you like :) - how awesome is that?</p>
 
@@ -89,7 +89,7 @@ bsh.system.shutdownOnExit = false;
 </code></pre>
 
 <p>Now all you need is a small script which you can use to control your
-test plan user properties. I&apos;m using very simple script 
+test plan user properties. I&apos;m using very simple script
 <code>properties-control.bsh</code>. And this is how you can use it to change
 <code>login.sleep</code> property to 500 over 5 minutes on <code>jmeter01.company.net</code>
 jmeter server.</p>
@@ -105,18 +105,18 @@ $ jmeter01 bsh/parameter-control.bsh @update login.sleep 500 5m
 
 <h4 id="tips-and-tricks"><strong>Tips</strong> and <strong>Tricks</strong></h4>
 
-<p><strong>Stopping Remote Script</strong><br />
-Killing java process <strong>DOES NOT</strong> stop bsh script on remote server. 
+<p><strong>Stopping Remote Script</strong>
+Killing java process <strong>DOES NOT</strong> stop bsh script on remote server.
 This is very important if your script runs for few minutes.</p>
 
-<p><strong>Maximum Number of Threads</strong><br />
+<p><strong>Maximum Number of Threads</strong>
 One thing that you can&apos;t do with <code>bsh</code> is to spin-up new jmeter
 threads. That&apos;s why you need to estimate maximum number of threads,
 that will generate target load. For that run you test with disabled
 timers and get approximate execution time for one journey. Now simply
 calculate number of journeys and request for given number of threads.</p>
 
-<p><strong>Global Cache</strong><br />
+<p><strong>Global Cache</strong>
 Globally defined functions are cached after first execution. When
 developing small, global functions you will have to restart jmeter to
 clear beanshell cache. In your custom scripts, simply use objects.</p>

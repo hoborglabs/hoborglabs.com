@@ -34,7 +34,7 @@
 		<mkdir dir="${dir.out}/pl/blog" />
 
 		<echo level="info">Generating HTML to `${dir.out}`</echo>
-		<exec executable="${cmd.php}" failonerror="true" outputproperty="devnull">
+		<exec executable="${cmd.php}" failonerror="true">
 			<env key="DS_HOSTDIR" value="${dir.base}" />
 			<env key="DS_ENV" value="${ds.env}" />
 			<arg line="displayService.phar" />

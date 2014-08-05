@@ -4,22 +4,7 @@
 		<name><![CDATA[Home]]></name>
 	</data>
 	<component file="includes/google-analytics.page" id="16" />
-	<component name="header" id="1">
-		<data>
-			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
-			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
-			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
-			<menuLang><![CDATA[en]]></menuLang>
-			<menu>
-				<en>
-					<link href="/en" active="active">Home</link>
-					<link href="/en/cms">Hoborg CMS</link>
-					<link href="/en/blog">Blog</link>
-					<link href="/en/projects">Projects</link>
-				</en>
-			</menu>
-		</data>
-	</component>
+	<component file="includes/en/header.page" id="1" />
 	<component name="main" id="2">
 		<component name="content" id="3" parent-id="2">
 			<data>
@@ -46,21 +31,21 @@
 				<component name="paragraph" id="7" parent-id="4">
 					<data>
 						<text><![CDATA[
-<p>Hoborg Labolatories is a home for all my projects. Obviousely it is all about Hoborg - the core project - 
+<p>Hoborg Labolatories is a home for all my projects. Obviousely it is all about Hoborg - the core project -
 <a href="http://symfony.com">Symfony2</a> Bundles and Components.</p>
-<p>You can find out more about Hoborg CMS on <a href="/en/cms">its site</a>. All projects in my lab are build and 
-tested on Jenkins continues integration server. You can chekc health status of each project at 
+<p>You can find out more about Hoborg CMS on <a href="/en/cms">its site</a>. All projects in my lab are build and
+tested on Jenkins continues integration server. You can chekc health status of each project at
 <a href="http://ci01.hoborglabs.com">ci01.hoborglabs.com</a></p>
 						]]></text>
 					</data>
 				</component>
-				
+
 				<component name="paragraph" id="7" parent-id="4">
 					<data>
 						<text><![CDATA[
 <h3>Build your own <strong>Dashboard</strong></h3>
 <p>Hoborg Labolatories released <a href="http://dashboard.hoborglabs.com">Dashboard</a>. It's free, easy to install
-and run, distributed dashboard. It comes with handy widgets for pulling data from Jenkins, Trello, Redmine, Github... 
+and run, distributed dashboard. It comes with handy widgets for pulling data from Jenkins, Trello, Redmine, Github...
 HoborgLabs <a href="/dashboard">got one</a> as well.
 </p>
 <p>
@@ -78,12 +63,12 @@ and add it to your dashboard!
 						<size><![CDATA[columns3]]></size>
 					</data>
 				</component>
-				
+
 				<component name="paragraph">
 					<data>
 						<text><![CDATA[
 <h3><strong>Bye-bye</strong> Zend.</h3>
-<p>Hoborg Labs is moving away form Zend. Next stop: Symfony2, Doctrine2 and Behat2. First module on the list is HoborgCommons - which is now public project and you can 
+<p>Hoborg Labs is moving away form Zend. Next stop: Symfony2, Doctrine2 and Behat2. First module on the list is HoborgCommons - which is now public project and you can
 <a href="https://github.com/hoborglabs">find it on github</a>!</p>
 <p>On top of that Hoborg will be getting RESTful APIs. More information and docs comming soon.</p>
 ]]></text>

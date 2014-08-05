@@ -4,22 +4,8 @@
         <name><![CDATA[Jmeter Test Plan Fragmentation]]></name>
     </data>
     <component file="includes/google-analytics.page" id="16" />
-    <component name="header" id="1">
-        <data>
-            <titlePrimary><![CDATA[hoborg]]></titlePrimary>
-            <titleSecondary><![CDATA[labs.com]]></titleSecondary>
-            <subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
-            <menuLang><![CDATA[en]]></menuLang>
-            <menu>
-                <en>
-                    <link href="/en">Home</link>
-                    <link href="/en/cms">Hoborg CMS</link>
-                    <link href="/en/blog" active="active">Blog</link>
-                    <link href="http://projects.hoborglabs.com/">Projects</link>
-                </en>
-            </menu>
-        </data>
-    </component>
+    <component file="includes/en/header.page" id="1" />
+
     <component name="main" id="2">
         <component name="content" id="3" parent-id="2">
             <data>
@@ -41,8 +27,8 @@ browsing, registration process, ... you get the idea. Check out
 [Test Fragment](http://jmeter.apache.org/usermanual/component_reference.html#Test_Fragment)
 and [Include Controller](http://jmeter.apache.org/usermanual/component_reference.html#Include_Controller)
 Components. Put one Test Fragment in your frag jmx file, and include it
-from your main test plan using Include Controller. Make sure your 
-`user.dir` is set correctly on remote servers. It will be use to 
+from your main test plan using Include Controller. Make sure your
+`user.dir` is set correctly on remote servers. It will be use to
 determine full path of your jmx file.
 
 **Next**, design your test profile using your fragments. Busy weekend
@@ -67,7 +53,7 @@ Deviation (in milliseconds): ${__P(login.rsleep,1000)}
 Constant Delay Offset (in milliseconds): ${__P(login.sleep,2000)}
 ~~~~~
 
-<!-- 
+<!--
 <table>
   <thead>
     <tr>

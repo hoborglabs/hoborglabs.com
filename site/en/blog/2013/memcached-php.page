@@ -4,21 +4,8 @@
 		<name><![CDATA[Memcached is a Weird Monster]]></name>
 	</data>
 
-	<component name="header" id="1">
-		<data>
-			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
-			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
-			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
-			<menuLang><![CDATA[en]]></menuLang>
-			<menu>
-				<en>
-					<link href="/en">Home</link>
-					<link href="/en/cms">Hoborg CMS</link>
-					<link href="/en/blog" active="active">Blog</link>
-				</en>
-			</menu>
-		</data>
-	</component>
+	<component file="includes/en/header.page" id="1" />
+
 	<component name="main" id="2">
 		<component name="content" id="3" parent-id="2">
 			<data>
@@ -34,7 +21,7 @@
 						<markdown><![CDATA[
 ### **Memcached** is a Weird Creature.
 
-... or maybe it's just the way you use it?  
+... or maybe it's just the way you use it?
 We are using memcached as our shared cache for PHP powered web tier.
 And for some time it was good. And by good I mean we didn't have
 any major problems despite the not-so-good way we have been using it.
@@ -52,11 +39,11 @@ libmemcached and memcached extension.
 #### What is Our **Desired Behaviour**?
 
 Depending on what do you use memcached for, you might need a different
-set of features.  
+set of features.
 In our case the ideal solution should support (a) memcached failover
-with (b) the minimum impact on missed hits. It should also (c) 
+with (b) the minimum impact on missed hits. It should also (c)
 automatically re-add server when it's available again (and again with
-minimum impact on missed hits).  
+minimum impact on missed hits).
 Additionally we also need (d) persistent connections.
 
 Sounds really basic, but it caused me a few headaches!
@@ -78,7 +65,7 @@ saved in PHP memory between requests using provided id.
 In other words libmemcached does not manage persistent connections,
 it's PHP!
 
-That has one simple implication. You only need to configure your 
+That has one simple implication. You only need to configure your
 connection once when it's created. That includes setting all kind of
 options.
 
@@ -102,7 +89,7 @@ reading.
 #### Consistent Hashing.
 
 Everybody knows what consistent distribution is all about. But I (and
-maybe you too) made some false assumptions about it.  
+maybe you too) made some false assumptions about it.
 I've assumed that memcached driver will take care of dead servers and
 will start reassigning keys from dead server across existing ones - oh
 boy, I was wrong :)
@@ -154,8 +141,8 @@ triggers recalculation of consistent distribution continuum, and the
 
 #### Failover and Auto Recovery
 
-Now, we got persistent connections and as soon as fatal error will 
-accure we will stop using it and redistribute keys to other servers.  
+Now, we got persistent connections and as soon as fatal error will
+accure we will stop using it and redistribute keys to other servers.
 Now we want make sure that we will star using bad servers the second
 it's back on line.
 
@@ -187,12 +174,12 @@ docs ;)
 
 `OPT_RETRY_TIMEOUT` is by default set to 2 seconds, not 0.
 
-Turning off `OPT_LIBKETAMA_COMPATIBLE` will set distribution to 
+Turning off `OPT_LIBKETAMA_COMPATIBLE` will set distribution to
 `DISTRIBUTION_MODULA` (!)
 
 Only following distribution takes into account ejected servers.
-`CONSISTENT`, `CONSISTENT_KETAMA`, `CONSISTENT_KETAMA_SPY` or 
-`CONSISTENT_WEIGHTED` (5),  
+`CONSISTENT`, `CONSISTENT_KETAMA`, `CONSISTENT_KETAMA_SPY` or
+`CONSISTENT_WEIGHTED` (5),
 Enabling `OPT_LIBKETAMA_COMPATIBLE` which will set distribution to
 `CONSISTENT_WEIGHTED`.
 
@@ -203,7 +190,7 @@ servers manually in your php code - let the driver do the work!
 
 #### The Code {#the-code}
 
-This is fully working example code.  
+This is fully working example code.
 Try running it like that while turning on and off your memcached servers.
 ~~~~~
 bash -c "while true; do curl -s http://wo.local/public/memcached.php; sleep 0.5; done;" | awk '{ if ($1 == "OK") { ok = ok + 1 } else { err = err + 1 } if ($2 == "127.0.0.1") { s1 = s1 + 1 } else { s2 = s2 +1 } print "OK: " ok ", ERR: " err ", SERVERS HIT COUNT [" s1 ", " s2 "]";}'

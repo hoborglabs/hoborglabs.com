@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page name="include">
+    <component name="header" id="1">
+        <data>
+            <titlePrimary><![CDATA[hoborg]]></titlePrimary>
+            <titleSecondary><![CDATA[labs.com]]></titleSecondary>
+            <subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
+            <menuLang><![CDATA[en]]></menuLang>
+            <menu>
+                <en>
+                    <link href="/en">Home</link>
+                    <link href="/en/cms">Hoborg CMS</link>
+                    <link href="/en/blog">Blog</link>
+                    <link href="/en/projects">Projects</link>
+                </en>
+            </menu>
+        </data>
+    </component>
+</page>

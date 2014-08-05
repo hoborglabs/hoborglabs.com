@@ -5,22 +5,7 @@
 		</name>
 	</data>
 	<component file="includes/google-analytics.page" id="2" parent-id="1"/>
-	<component name="header" id="3" parent-id="1">
-		<data>
-			<titlePrimary><![CDATA[hoborg]]></titlePrimary>
-			<titleSecondary><![CDATA[labs.com]]></titleSecondary>
-			<subtitle><![CDATA[by Wojtek Oledzki]]></subtitle>
-			<menuLang><![CDATA[en]]></menuLang>
-			<menu>
-				<en>
-					<link href="/en">Home</link>
-					<link href="/en/cms">Hoborg CMS</link>
-					<link href="/en/blog">Blog</link>
-					<link href="/en/projects" active="active">Projects</link>
-				</en>
-			</menu>
-		</data>
-	</component>
+	<component file="includes/en/header.page" id="1" />
 	<component name="main" id="4" parent-id="1">
 		<data/>
 		<component name="content" id="5" parent-id="4">
