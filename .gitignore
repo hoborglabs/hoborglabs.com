@@ -11,6 +11,7 @@
 
 ##
 # build
+/.gem
 /displayService.phar
 /vendors/dashboard/*
 !/vendors/dashboard/install.sh
